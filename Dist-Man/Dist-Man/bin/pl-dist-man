@@ -2,20 +2,21 @@
 
 =head1 NAME
 
-module-starter - creates a skeleton module distribution
+pl-dist-man - command line interface for Dist-Man's functionality
 
 =cut
 
 use warnings;
 use strict;
 
-use Module::Starter::App;
+use Dist::Man::App;
 
-Module::Starter::App->run;
+Dist::Man::App->run;
 
 =head1 SYNOPSIS
 
-module-starter [options]
+    pl-dist-man create [options]
+    pl-dist-man setup [options]
 
 Options:
 
@@ -43,15 +44,15 @@ Available Licenses:
 
 Example:
 
-    module-starter --module=Foo::Bar,Foo::Bat \
+    pl-dist-man --module=Foo::Bar,Foo::Bat \
         --author="Andy Lester" --email=andy@petdance.com
 
 =head1 DESCRIPTION
 
-C<module-starter> is a command-line interface to L<Module::Starter>, which it
+C<pl-dist-man> is a command-line interface to L<Dist::Man>, which it
 uses to perform all the work of creating distributions.  An alternate backend
-for C<module-starter> can be specified with the C<--class> option.  Plugins to
-the standard Module::Starter module can be specified with one or more
+for C<pl-dist-man> can be specified with the C<--class> option.  Plugins to
+the standard Dist::Man module can be specified with one or more
 C<--plugin> options.
 
 If no directory name is supplied, the distribution name will be used for the
@@ -63,9 +64,9 @@ builders.
 
 =head1 CONFIGURATION
 
-module-starter will look for a configuration file before reading its command
-line parameters.  The default location is C<$HOME/.module-starter/config> but
-if the MODULE_STARTER_DIR environment variable is set, module-starter will look
+pl-dist-man will look for a configuration file before reading its command
+line parameters.  The default location is C<$HOME/.pl-dist-man/config> but
+if the MODULE_STARTER_DIR environment variable is set, pl-dist-man will look
 for C<config> in that directory.
 
 The configuration file is just a list of names and values, separated by colons.
@@ -74,11 +75,21 @@ might read:
 
  author: Ricardo SIGNES
  email:  rjbs@cpan.org
- plugins: Module::Starter::Simple Module::Starter::Plugin::XYZ
+ plugins: Dist::Man::Simple Dist::Man::Plugin::XYZ
  xyz_option: red green blue
 
 This format may become more elaborate in the future, but a file of this type
 should remain valid.
+
+=head1 COPYRIGHT & LICENSE
+
+=head2 module-starter
+
+Unknown.
+
+=head2 pl-dist-man
+
+Same terms as module-starter with same code ownership.
 
 =cut
 
