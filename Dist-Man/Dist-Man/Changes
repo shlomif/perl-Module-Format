@@ -1,3 +1,13 @@
+Revision history for Perl extension Dist::Man
+
+0.0.1      Sun Aug 30 23:21:04 IDT 2009
+    * Ported the Module-Starter trunk to Dist-Man.
+
+    * The script is now called pl-dist-man and it accepts a "setup" or
+    "create" operation, which will later aggregate to further ops.
+
+    * Releasing into CPAN.
+
 Revision history for Perl extension Module::Starter
 
 NEXT
