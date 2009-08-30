@@ -93,6 +93,8 @@ sub run {
       );
   }
 
+  my $operation = shift(@ARGV);
+
   $config{class} ||= 'Dist::Man';
 
   $config{builder} = ['ExtUtils::MakeMaker'] unless @{$config{builder}};
@@ -100,6 +102,14 @@ sub run {
   eval "require $config{class};";
   croak "invalid starter class $config{class}: $@" if $@;
   $config{class}->import(@{$config{plugins}});
+
+  if (! ( ($operation eq "setup") || ($operation eq "create") ) )
+  {
+    pod2usage(
+        -msg => "Not a valid operation - '$operation'",
+        -exitval => 2,
+    );
+  }
 
   $config{class}->create_distro( %config );
 
