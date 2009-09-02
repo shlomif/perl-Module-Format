@@ -1,6 +1,6 @@
-
 bin/pl-dist-man
 Build.PL
+bump-version-number.pl
 Changes
 getting-started.html
 inc/Test/Run/Builder.pm
@@ -12,6 +12,7 @@ lib/Dist/Man.pm
 lib/Dist/Man/Simple.pm
 Makefile.PL
 MANIFEST
+META.yml
 perlcriticrc
 README
 t/00-load.t
@@ -30,4 +31,3 @@ t/module-starter.t
 t/pod-coverage.t
 t/pod.t
 t/test-dist.t
-META.yml

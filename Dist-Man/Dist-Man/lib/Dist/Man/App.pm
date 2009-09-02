@@ -9,7 +9,7 @@ Dist::Man::App - the code behind the command line program
 use warnings;
 use strict;
 
-our $VERSION = '0.0.1';
+our $VERSION = '0.0.2';
 
 use Getopt::Long;
 use Pod::Usage;
