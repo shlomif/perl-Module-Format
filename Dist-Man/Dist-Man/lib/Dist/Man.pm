@@ -19,7 +19,7 @@ our $VERSION = '0.0.1';
 
 =head1 SYNOPSIS
 
-Nothing in here is meant for public consumption.  Use F<module-starter>
+Nothing in here is meant for public consumption.  Use F<pl-dist-man>
 from the command line.
 
     pl-dist-man create --module=Foo::Bar,Foo::Bat \
@@ -29,7 +29,7 @@ from the command line.
 
 This is the core module for Dist::Man.  If you're not looking to extend
 or alter the behavior of this module, you probably want to look at
-L<module-starter> instead.
+L<pl-dist-man> instead.
 
 Dist::Man is used to create a skeletal CPAN distribution, including basic
 builder scripts, tests, documentation, and module code.  This is done through

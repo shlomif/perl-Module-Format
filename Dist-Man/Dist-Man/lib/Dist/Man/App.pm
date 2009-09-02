@@ -36,7 +36,7 @@ sub _config_read {
 
   Dist::Man::App->run;
 
-This is equivalent to runnint F<module-starter>.  Its behavior is still subject
+This is equivalent to running F<pl-dist-man>.  Its behavior is still subject
 to change.
 
 =cut
@@ -45,7 +45,7 @@ sub run {
 
     my $configdir = $ENV{MODULE_STARTER_DIR} || '';
     if ( !$configdir && $ENV{HOME} ) {
-        $configdir = "$ENV{HOME}/.module-starter";
+        $configdir = "$ENV{HOME}/.perl-dist-man";
     }
 
     my %config    = _config_read( "$configdir/config" );
@@ -80,7 +80,7 @@ sub run {
         verbose      => \$config{verbose},
         version      => sub {
             require Dist::Man;
-            print "module-starter v$Dist::Man::VERSION\n";
+            print "pl-dist-man v$Dist::Man::VERSION\n";
             exit 1;
         },
         help         => sub { pod2usage(1); },
@@ -100,7 +100,7 @@ sub run {
   $config{builder} = ['ExtUtils::MakeMaker'] unless @{$config{builder}};
 
   eval "require $config{class};";
-  croak "invalid starter class $config{class}: $@" if $@;
+  croak "invalid manager class $config{class}: $@" if $@;
   $config{class}->import(@{$config{plugins}});
 
   if (! ( ($operation eq "setup") || ($operation eq "create") ) )
@@ -113,7 +113,7 @@ sub run {
 
   $config{class}->create_distro( %config );
 
-  print "Created starter directories and files\n";
+  print "Created manager directories and files\n";
 }
 
 1;
