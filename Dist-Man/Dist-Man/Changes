@@ -1,5 +1,9 @@
 Revision history for Perl extension Dist::Man
 
+0.0.2
+    * Got the tests to pass everywhere - some of them required 
+    Module::Starter, which wasn't available everywhere.
+
 0.0.1      Sun Aug 30 23:21:04 IDT 2009
     * Ported the Module-Starter trunk to Dist-Man.
 

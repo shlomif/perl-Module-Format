@@ -1,19 +1,19 @@
 #perl -T
 
-# This test suite ensures that Module::Starter::BuilderSet behaves
+# This test suite ensures that Dist::Man::BuilderSet behaves
 
 use strict;
 use warnings;
 
 use Test::More tests => 17;
 
-eval "require Module::Starter::BuilderSet";
+eval "require Dist::Man::BuilderSet";
 
-ok(!$@, 'require Module::Starter::BuilderSet');
+ok(!$@, 'require Dist::Man::BuilderSet');
 
-my $bset = new Module::Starter::BuilderSet;
+my $bset = new Dist::Man::BuilderSet;
 
-isa_ok($bset, 'Module::Starter::BuilderSet');
+isa_ok($bset, 'Dist::Man::BuilderSet');
 
 can_ok($bset, qw( default_builder
                   supported_builders
@@ -52,8 +52,8 @@ foreach my $builder ( $bset->supported_builders() ){
   }
 }
 
-use Module::Starter::Simple;
-my $simple = bless {}, 'Module::Starter::Simple';
+use Dist::Man::Simple;
+my $simple = bless {}, 'Dist::Man::Simple';
 
 can_ok( $simple,
         map { $bset->method_for_builder($_) } $bset->supported_builders()
