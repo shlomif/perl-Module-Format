@@ -1,5 +1,9 @@
 Revision history for Perl extension Dist::Man
 
+0.0.3
+    * Added the script_files parameter on Build.PL, to fix the 
+    auto-inclusion of bin/pl-dist-man~.
+
 0.0.2      Wed Sep  2 23:09:32 IDT 2009
     * Got the tests to pass everywhere - some of them required 
     Module::Starter, which wasn't available everywhere.

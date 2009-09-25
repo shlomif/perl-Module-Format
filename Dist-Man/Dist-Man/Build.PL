@@ -47,5 +47,6 @@ my $build = Test::Run::Builder->new(
         ],
     },
     create_makefile_pl => 'traditional',
+    script_files => ['bin/pl-dist-man'],
 );
 $build->create_build_script;
