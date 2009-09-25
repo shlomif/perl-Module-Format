@@ -1,6 +1,6 @@
 Revision history for Perl extension Dist::Man
 
-0.0.3
+0.0.3 Sat Sep 26 01:15:30 IDT 2009
     * Added the script_files parameter on Build.PL, to fix the 
     auto-inclusion of bin/pl-dist-man~.
 
