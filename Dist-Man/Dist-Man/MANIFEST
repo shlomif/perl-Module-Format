@@ -28,6 +28,7 @@ t/data/templates/t/pod-coverage.t
 t/data/templates/t/pod.t
 t/lib/Dist/Man/TestPlugin.pm
 t/lib/TestParseFile.pm
+t/dist-man-app.t
 t/module-starter.t
 t/pod-coverage.t
 t/pod.t
