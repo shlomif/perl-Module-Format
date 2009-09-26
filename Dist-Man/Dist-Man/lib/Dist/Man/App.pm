@@ -41,8 +41,8 @@ to change.
 
 =cut
 
-sub run {
-
+sub run
+{
     my $configdir = $ENV{MODULE_STARTER_DIR} || '';
     if ( !$configdir && $ENV{HOME} ) {
         $configdir = "$ENV{HOME}/.perl-dist-man";
@@ -61,6 +61,7 @@ sub run {
     }
 
     pod2usage(2) unless @ARGV;
+    my $operation = shift(@ARGV);
 
     GetOptions(
         'class=s'    => \$config{class},
@@ -78,42 +79,42 @@ sub run {
         'license=s'  => \$config{license},
         force        => \$config{force},
         verbose      => \$config{verbose},
-        version      => sub {
-            require Dist::Man;
-            print "pl-dist-man v$Dist::Man::VERSION\n";
-            exit 1;
-        },
+        version      => 
+            sub {
+                require Dist::Man;
+                print "pl-dist-man v$Dist::Man::VERSION\n";
+                exit 1;
+            },
         help         => sub { pod2usage(1); },
-  ) or pod2usage(2);
+    ) or pod2usage(2);
 
-  if (@ARGV) {
-      pod2usage(
-          -msg =>  "Unparseable arguments received: " . join(',', @ARGV),
-          -exitval => 2,
-      );
-  }
+    if (@ARGV) {
+        pod2usage(
+            -msg =>  "Unparseable arguments received: " . join(',', @ARGV),
+            -exitval => 2,
+        );
+    }
 
-  my $operation = shift(@ARGV);
 
-  $config{class} ||= 'Dist::Man';
+    $config{class} ||= 'Dist::Man';
 
-  $config{builder} = ['ExtUtils::MakeMaker'] unless @{$config{builder}};
+    $config{builder} = ['ExtUtils::MakeMaker'] unless @{$config{builder}};
 
-  eval "require $config{class};";
-  croak "invalid manager class $config{class}: $@" if $@;
-  $config{class}->import(@{$config{plugins}});
+    eval "require $config{class};";
+    croak "invalid manager class $config{class}: $@" if $@;
+    $config{class}->import(@{$config{plugins}});
 
-  if (! ( ($operation eq "setup") || ($operation eq "create") ) )
-  {
-    pod2usage(
-        -msg => "Not a valid operation - '$operation'",
-        -exitval => 2,
-    );
-  }
+    if (! ( ($operation eq "setup") || ($operation eq "create") ) )
+    {
+        pod2usage(
+            -msg => "Not a valid operation - '$operation'",
+            -exitval => 2,
+        );
+    }
 
-  $config{class}->create_distro( %config );
+    $config{class}->create_distro( %config );
 
-  print "Created manager directories and files\n";
+    print "Created manager directories and files\n";
 }
 
 1;
