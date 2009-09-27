@@ -19,7 +19,7 @@ while (my $r = $tree->next()) {
         LINES_LOOP:
         foreach (@lines)
         {
-            if (s#(\$VERSION = ')\d+\.\d+\.\d+(')#$1 . "0.0.3" . $2#e)
+            if (s#(\$VERSION = ')\d+\.\d+\.\d+(')#$1 . "0.0.4" . $2#e)
             {
                 last LINES_LOOP;
             }
