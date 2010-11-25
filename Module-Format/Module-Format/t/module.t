@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 use Module::Format::Module;
 
@@ -26,5 +26,10 @@ use Module::Format::Module;
     # TEST
     is ($module->format_as('colon'), 'XML::Grammar::Fiction',
         "Format as colon is sane."
+    );
+
+    # TEST
+    is ($module->format_as('dash'), 'XML-Grammar-Fiction',
+        "Format as dash is sane.",
     );
 }
