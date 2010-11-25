@@ -175,6 +175,10 @@ sub format_as
     {
         return 'perl-' . $self->format_as('dash');
     }
+    elsif ($format eq 'rpm_colon')
+    {
+        return 'perl(' . $self->format_as('colon') . ')';
+    }
     else
     {
         die "Unknown format '$format'";

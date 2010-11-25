@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 6;
+use Test::More tests => 7;
 
 use Module::Format::Module;
 
@@ -41,6 +41,11 @@ use Module::Format::Module;
     # TEST
     is ($module->format_as('rpm_dash'), 'perl-XML-Grammar-Fiction',
         "Format as rpm_dash is sane.",
+    );
+
+    # TEST
+    is ($module->format_as('rpm_colon'), 'perl(XML::Grammar::Fiction)',
+        "Format as rpm_colon is sane.",
     );
 
 }
