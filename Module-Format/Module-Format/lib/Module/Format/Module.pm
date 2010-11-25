@@ -298,6 +298,19 @@ sub format_as
     return;
 }
 
+=head2 my $clone = $module->clone()
+
+Duplicates the object.
+
+=cut
+
+sub clone
+{
+    my $self = shift;
+
+    return ref($self)->_new({_components => $self->get_components_list() } );
+}
+
 =head1 AUTHOR
 
 Shlomi Fish, L<http://www.shlomifish.org/> .

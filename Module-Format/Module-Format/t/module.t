@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 23;
+use Test::More tests => 31;
 
 use Module::Format::Module;
 
@@ -164,4 +164,54 @@ use Module::Format::Module;
     is ($module->format_as('dash'),  'HTML-TreeBuilder-LibXML',
         "Format as dash is sane.",
     );
+}
+
+{
+    my $orig_module = Module::Format::Module->from(
+        {
+            format => 'colon',
+            value => 'XML::Grammar::Fiction',
+        }
+    );
+
+    # TEST
+    ok ($orig_module, '$orig_module is defined');
+
+    my $clone = $orig_module->clone();
+
+    # TEST
+    ok ($clone, '$clone is defined');
+
+    # TEST
+    is_deeply(
+        $clone->get_components_list(),
+        [qw(XML Grammar Fiction)],
+        "get_components_list() is sane.",
+    );
+
+    # TEST
+    is ($clone->format_as('colon'), 'XML::Grammar::Fiction',
+        "Format as colon is sane."
+    );
+
+    # TEST
+    is ($clone->format_as('dash'), 'XML-Grammar-Fiction',
+        "Format as dash is sane.",
+    );
+
+    # TEST
+    is ($clone->format_as('unix'), 'XML/Grammar/Fiction.pm',
+        "Format as unix is sane.",
+    );
+
+    # TEST
+    is ($clone->format_as('rpm_dash'), 'perl-XML-Grammar-Fiction',
+        "Format as rpm_dash is sane.",
+    );
+
+    # TEST
+    is ($clone->format_as('rpm_colon'), 'perl(XML::Grammar::Fiction)',
+        "Format as rpm_colon is sane.",
+    );
+
 }
