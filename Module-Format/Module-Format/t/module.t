@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 use Module::Format::Module;
 
@@ -37,4 +37,10 @@ use Module::Format::Module;
     is ($module->format_as('unix'), 'XML/Grammar/Fiction.pm',
         "Format as unix is sane.",
     );
+
+    # TEST
+    is ($module->format_as('rpm_dash'), 'perl-XML-Grammar-Fiction',
+        "Format as rpm_dash is sane.",
+    );
+
 }
