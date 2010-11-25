@@ -174,6 +174,15 @@ sub from
         }
         return $class->from({format => 'colon', value => $1});
     }
+    elsif ($format eq 'rpm_dash')
+    {
+        if ($value !~ s{\Aperl-}{})
+        {
+            die "rpm_dash value does not start with the 'perl-' prefix.";
+        }
+        
+        return $class->from({format => 'dash', value => $value});
+    }
     else
     {
         die "Unknown format '$format'!";
