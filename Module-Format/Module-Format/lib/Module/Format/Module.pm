@@ -115,6 +115,25 @@ Valid formats are:
 Separated by a double colon, e.g: C<XML::RSS>, C<Data::Dumper>, 
 C<Catalyst::Plugin::Model::DBIx::Class>, etc.
 
+=item * 'dash'
+
+Separated by a double colon, e.g: C<XML-RSS>, C<Data-Dumper>, 
+C<Catalyst-Plugin-Model-DBIx-Class>, etc.
+
+=item * 'unix'
+
+UNIX path, e.g: C<lib/XML/RSS.pm>, C<lib/Catalyst/Plugin/Model/DBIx/Class.pm> .
+
+=item * 'rpm_dash'
+
+Like dash, only with C<'perl-'> prefixed: C<perl-XML-RSS>, C<perl-Data-Dumper>.
+
+=item * 'rpm_colon'
+
+Like colon only wrapped inside C<perl(...)> - useful for rpm provides for
+individual modules. E.g: C<perl(XML::RSS)>, 
+C<perl(Catalyst::Plugin::Authentication)> .
+
 =back
 
 =cut
@@ -186,9 +205,10 @@ sub format_as
 
     return;
 }
+
 =head1 AUTHOR
 
-Shlomi Fish, C<< <shlomif at cpan.org> >>
+Shlomi Fish, L<http://www.shlomifish.org/> .
 
 =head1 BUGS
 
