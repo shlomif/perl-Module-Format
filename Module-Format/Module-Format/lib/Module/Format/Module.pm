@@ -140,22 +140,20 @@ C<perl(Catalyst::Plugin::Authentication)> .
 
 =cut
 
-sub from
+sub _calc_components_from_string
 {
     my ($class, $args) = @_;
 
     my $format = $args->{format};
     my $value = $args->{value};
 
-    my @components;
-
     if ($format eq 'colon')
     {
-        @components = split(/::/, $value, -1);
+        return [split(/::/, $value, -1)];
     }
     elsif ($format eq 'dash')
     {
-        @components = split(/-/, $value, -1);
+        return [split(/-/, $value, -1)];
     }
     elsif ($format eq 'unix')
     {
@@ -164,7 +162,7 @@ sub from
             die "Cannot find a .pm suffix in the 'unix' format.";
         }
 
-        @components = split(m{/}, $value, -1);
+        return [split(m{/}, $value, -1)];
     }
     elsif ($format eq 'rpm_colon')
     {
@@ -172,7 +170,10 @@ sub from
         {
             die "Improper value for rpm_colon";
         }
-        return $class->from({format => 'colon', value => $1});
+
+        return $class->_calc_components_from_string(
+            {format => 'colon', value => $1}
+        );
     }
     elsif ($format eq 'rpm_dash')
     {
@@ -181,14 +182,28 @@ sub from
             die "rpm_dash value does not start with the 'perl-' prefix.";
         }
         
-        return $class->from({format => 'dash', value => $value});
+        return $class->_calc_components_from_string(
+            {format => 'dash', value => $value}
+        );
     }
     else
     {
         die "Unknown format '$format'!";
     }
+}
 
-    return $class->_new({_components => \@components});
+sub from
+{
+    my ($class, $args) = @_;
+
+    my $format = $args->{format};
+    my $value = $args->{value};
+
+    return $class->_new(
+        {
+            _components => $class->_calc_components_from_string($args)
+        }
+    );
 }
 
 =head2 my $array_ref = $module->get_components_list()
