@@ -145,12 +145,22 @@ sub from
     my $format = $args->{format};
     my $value = $args->{value};
 
-    if ($format ne "colon")
+    my @components;
+
+    if ($format eq 'colon')
     {
-        die "format must be colon";
+        @components = split(/::/, $value, -1);
+    }
+    elsif ($format eq 'dash')
+    {
+        @components = split(/-/, $value, -1);
+    }
+    else
+    {
+        die "Unknown format '$format'!";
     }
 
-    return $class->_new({_components => [split(/::/, $value, -1)]});
+    return $class->_new({_components => \@components});
 }
 
 =head2 my $array_ref = $module->get_components_list()
