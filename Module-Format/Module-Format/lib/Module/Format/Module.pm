@@ -5,7 +5,7 @@ use strict;
 
 =head1 NAME
 
-Module::Format::Module - The great new Module::Format::Module!
+Module::Format::Module - encapsulates a single Perl module.
 
 =head1 VERSION
 
@@ -15,30 +15,126 @@ Version 0.01
 
 our $VERSION = '0.01';
 
-
 =head1 SYNOPSIS
-
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
 
     use Module::Format::Module;
 
-    my $foo = Module::Format::Module->new();
-    ...
+    my $module = Module::Format::Module->from(
+        {
+            format => 'colon',
+            value => 'XML::RSS',
+        }
+        );
 
-=head1 EXPORT
+    my $module = Module::Format::Module->from(
+        {
+            format => 'dash',
+            value => 'XML-RSS',
+        }
+        );
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+    my $module = Module::Format::Module->from(
+        {
+            format => 'unix',
+            value => 'XML/RSS.pm',
+        }
+        );
 
-=head1 FUNCTIONS
+    my $module = Module::Format::Module->from(
+        {
+            format => 'rpm_dash',
+            value => 'perl-XML-RSS',
+        }
+        );
 
-=head2 function1
+    my $module = Module::Format::Module->from(
+        {
+            format => 'rpm_colon',
+            value => 'perl(XML::RSS)',
+        }
+        );
+
+    my $module = Module::Format::Module->from_guess(
+        { 
+            value => # All of the above...
+        }
+    );
+
+    # Prints "XML-RSS"
+    print $module->format({ format => "dash" }), "\n";
+
+    # Prints "perl(XML::RSS)"
+    print $module->format({ format => "rpm_colon" }), "\n";
+
+    # Prints "libxml-rss-perl"
+    print $module->format({ format => "debian" }), "\n";
+
+    # Prints "XML::RSS"
+    print $module->to("colon"), "\n";
 
 =cut
 
-sub function1 {
+sub _new
+{
+    my $class = shift;
+    my $self = bless {}, $class;
+    $self->_init(@_);
+    return $self;
+}
+
+sub _components
+{
+    my $self = shift;
+
+    if (@_)
+    {
+        $self->{_components} = shift;
+    }
+    return $self->{_components};
+}
+
+sub _init
+{
+    my ($self, $args) = @_;
+
+    $self->_components([ @{ $args->{_components} } ]);
+
+    return;
+}
+
+=head1 FUNCTIONS
+
+=head2 my $module = Module::Format::Module->from({format => $format, value => $string});
+
+Construct a Module::Format::Module object from the given format $format
+and the string value $string .
+
+Valid formats are:
+
+=over 4 
+
+=item * 'colon'
+
+Separated by a double colon, e.g: C<XML::RSS>, C<Data::Dumper>, 
+C<Catalyst::Plugin::Model::DBIx::Class>, etc.
+
+=back
+
+=cut
+
+sub from
+{
+    my ($class, $args) = @_;
+
+    my $format = $args->{format};
+    my $value = $args->{value};
+
+    if ($format ne "colon")
+    {
+        die "format must be colon";
+    }
+
+    return $class->_new({_components => []});
 }
 
 =head2 function2
