@@ -122,7 +122,9 @@ C<Catalyst-Plugin-Model-DBIx-Class>, etc.
 
 =item * 'unix'
 
-UNIX path, e.g: C<lib/XML/RSS.pm>, C<lib/Catalyst/Plugin/Model/DBIx/Class.pm> .
+UNIX path, e.g: C<XML/RSS.pm>, C<Catalyst/Plugin/Model/DBIx/Class.pm> .
+
+This is commonly displayed in Perl error messages.
 
 =item * 'rpm_dash'
 
@@ -154,6 +156,15 @@ sub from
     elsif ($format eq 'dash')
     {
         @components = split(/-/, $value, -1);
+    }
+    elsif ($format eq 'unix')
+    {
+        if ($value !~ s{\.pm\z}{})
+        {
+            die "Cannot find a .pm suffix in the 'unix' format.";
+        }
+
+        @components = split(m{/}, $value, -1);
     }
     else
     {
