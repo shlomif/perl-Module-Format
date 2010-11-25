@@ -148,12 +148,22 @@ my %formats =
             my ($class, $value) = @_;
             return [split(/::/, $value, -1)]; 
         },
+        format => sub {
+            my ($self) = @_;
+
+            return join('::', @{$self->_components()});
+        },
     },
     dash =>
     {
         input => sub { 
             my ($class, $value) = @_;
             return [split(/-/, $value, -1)]; 
+        },
+        format => sub {
+            my ($self) = @_;
+
+            return join('-', @{$self->_components()});
         },
     },
     unix =>
@@ -167,6 +177,11 @@ my %formats =
             }
 
             return [split(m{/}, $value, -1)];
+        },
+        format => sub {
+            my ($self) = @_;
+
+            return join('/', @{$self->_components()}) . '.pm';
         },
     },
     rpm_colon =>
@@ -183,6 +198,11 @@ my %formats =
                 {format => 'colon', value => $1}
             );
         },
+        format => sub {
+             my ($self) = @_;
+
+             return 'perl(' . $self->format_as('colon') . ')';
+        },
     },
 
     'rpm_dash' => {
@@ -198,6 +218,11 @@ my %formats =
             return $class->_calc_components_from_string(
                 {format => 'dash', value => $value}
             );
+        },
+        format => sub {
+            my ($self) = @_;
+
+            return 'perl-' . $self->format_as('dash');
         },
     },
 );
@@ -260,29 +285,14 @@ sub format_as
 {
     my ($self, $format) = @_;
 
-    if ($format eq 'colon')
+    if (exists($formats{$format}))
     {
-        return join('::', @{$self->_components()});
-    }
-    elsif ($format eq 'dash')
-    {
-        return join('-', @{$self->_components()});
-    }
-    elsif ($format eq 'unix')
-    {
-        return join('/', @{$self->_components()}) . '.pm';
-    }
-    elsif ($format eq 'rpm_dash')
-    {
-        return 'perl-' . $self->format_as('dash');
-    }
-    elsif ($format eq 'rpm_colon')
-    {
-        return 'perl(' . $self->format_as('colon') . ')';
+        my $handler = $formats{$format}->{'format'};
+        return $self->$handler();
     }
     else
     {
-        die "Unknown format '$format'";
+        die "Unknown format '$format';";
     }
 
     return;
