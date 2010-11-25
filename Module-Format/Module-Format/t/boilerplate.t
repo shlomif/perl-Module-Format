@@ -49,9 +49,11 @@ TODO: {
   );
 
   module_boilerplate_ok('lib/Module/Format.pm');
-  module_boilerplate_ok('lib/Module/Format/Module.pm');
   module_boilerplate_ok('lib/Module/Format/ModuleList.pm');
 
 
 }
 
+{
+    module_boilerplate_ok('lib/Module/Format/Module.pm');
+}
