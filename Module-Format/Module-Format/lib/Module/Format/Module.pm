@@ -101,6 +101,26 @@ sub _init
 
 =head1 FUNCTIONS
 
+=head2 my $module = Module::Format::Module->from_components({components => [@components]})
+
+Constructs a module from @components which are strings that indicate the 
+individual components of the module. For example:
+
+    my $module = Module::Format::Module->from_components(
+        {
+            components => [qw(XML Grammar Fiction)],
+        }
+    );
+
+=cut
+
+sub from_components
+{
+    my ($class, $args) = @_;
+
+    return $class->_new({_components => [@{$args->{components}}]});
+}
+
 =head2 my $module = Module::Format::Module->from({format => $format, value => $string});
 
 Construct a Module::Format::Module object from the given format $format
