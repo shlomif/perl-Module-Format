@@ -1,16 +1,9 @@
 Module-Format
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
-
-A README file is required for CPAN modules since CPAN extracts the README
-file from a module distribution so that people browsing the archive
-can use it to get an idea of the module's uses. It is usually a good idea
-to provide version information here so that people can decide whether
-fixes for the module are worth downloading.
-
+Module-Format is a CPAN distribution to translate between the various formats
+that Perl 5 modules and distributions can appear in (e.g: "XML-RSS", "XML::RSS",
+"XML/RSS.pm", "perl(XML::RSS)", "perl-XML-RSS") and perform operations on
+a list of them. 
 
 INSTALLATION
 

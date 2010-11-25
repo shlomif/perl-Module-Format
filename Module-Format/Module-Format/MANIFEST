@@ -5,6 +5,7 @@ lib/Module/Format/ModuleList.pm
 lib/Module/Format/Module.pm
 lib/Module/Format.pm
 MANIFEST
+MANIFEST.SKIP
 README
 t/00-load.t
 t/module.t
