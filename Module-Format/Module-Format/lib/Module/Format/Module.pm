@@ -166,6 +166,14 @@ sub from
 
         @components = split(m{/}, $value, -1);
     }
+    elsif ($format eq 'rpm_colon')
+    {
+        if ($value !~ m{\Aperl\(((?:\w+::)*\w+)\)\z})
+        {
+            die "Improper value for rpm_colon";
+        }
+        return $class->from({format => 'colon', value => $1});
+    }
     else
     {
         die "Unknown format '$format'!";
