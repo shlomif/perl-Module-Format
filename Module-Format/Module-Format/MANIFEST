@@ -1,0 +1,10 @@
+Build.PL
+Changes
+MANIFEST
+README
+lib/Module/Format.pm
+lib/Module/Format/Module.pm
+lib/Module/Format/ModuleList.pm
+t/00-load.t
+t/pod-coverage.t
+t/pod.t
