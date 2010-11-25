@@ -61,16 +61,13 @@ our $VERSION = '0.01';
     );
 
     # Prints "XML-RSS"
-    print $module->format({ format => "dash" }), "\n";
+    print $module->format_as('dash'), "\n";
 
     # Prints "perl(XML::RSS)"
-    print $module->format({ format => "rpm_colon" }), "\n";
+    print $module->format_as('rpm_colon'), "\n";
 
     # Prints "libxml-rss-perl"
-    print $module->format({ format => "debian" }), "\n";
-
-    # Prints "XML::RSS"
-    print $module->to("colon"), "\n";
+    print $module->format_as('debian'), "\n";
 
 =cut
 
@@ -152,6 +149,27 @@ sub get_components_list
     return [ @{$self->_components()} ];
 }
 
+=head2 $module->format_as($format)
+
+Format the module in the given format. See from() for a list.
+
+=cut
+
+sub format_as
+{
+    my ($self, $format) = @_;
+
+    if ($format eq 'colon')
+    {
+        return join("::", @{$self->_components()})
+    }
+    else
+    {
+        die "Unknown format '$format'";
+    }
+
+    return;
+}
 =head1 AUTHOR
 
 Shlomi Fish, C<< <shlomif at cpan.org> >>
