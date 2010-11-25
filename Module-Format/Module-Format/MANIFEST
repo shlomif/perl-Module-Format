@@ -1,10 +1,11 @@
 Build.PL
 Changes
+lib/Module/Format/ModuleList.pm
+lib/Module/Format/Module.pm
+lib/Module/Format.pm
 MANIFEST
 README
-lib/Module/Format.pm
-lib/Module/Format/Module.pm
-lib/Module/Format/ModuleList.pm
 t/00-load.t
+t/module.t
 t/pod-coverage.t
 t/pod.t
