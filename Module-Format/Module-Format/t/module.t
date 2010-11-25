@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 19;
+use Test::More tests => 23;
 
 use Module::Format::Module;
 
@@ -134,5 +134,34 @@ use Module::Format::Module;
     # TEST
     is ($module->format_as('dash'),  'HTML-TreeBuilder-LibXML',
         "from rpm_colon Format as dash is sane.",
+    );
+}
+
+{
+    my $module = Module::Format::Module->from(
+        {
+            format => 'rpm_dash',
+            value => 'perl-HTML-TreeBuilder-LibXML',
+        }
+    );
+
+    # TEST
+    ok ($module);
+
+    # TEST
+    is_deeply(
+        $module->get_components_list(),
+        [qw(HTML TreeBuilder LibXML)],
+        "get_components_list() is sane.",
+    );
+
+    # TEST
+    is ($module->format_as('colon'), 'HTML::TreeBuilder::LibXML',
+        "Format as colon is sane."
+    );
+
+    # TEST
+    is ($module->format_as('dash'),  'HTML-TreeBuilder-LibXML',
+        "Format as dash is sane.",
     );
 }
