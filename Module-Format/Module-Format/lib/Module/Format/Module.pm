@@ -140,6 +140,68 @@ C<perl(Catalyst::Plugin::Authentication)> .
 
 =cut
 
+my %formats =
+(
+    colon =>
+    {
+        input => sub { 
+            my ($class, $value) = @_;
+            return [split(/::/, $value, -1)]; 
+        },
+    },
+    dash =>
+    {
+        input => sub { 
+            my ($class, $value) = @_;
+            return [split(/-/, $value, -1)]; 
+        },
+    },
+    unix =>
+    {
+        input => sub {
+            my ($class, $value) = @_;
+
+            if ($value !~ s{\.pm\z}{})
+            {
+                die "Cannot find a .pm suffix in the 'unix' format.";
+            }
+
+            return [split(m{/}, $value, -1)];
+        },
+    },
+    rpm_colon =>
+    {
+        input => sub {
+            my ($class, $value) = @_;
+
+            if ($value !~ m{\Aperl\(((?:\w+::)*\w+)\)\z})
+            {
+                die "Improper value for rpm_colon";
+            }
+
+            return $class->_calc_components_from_string(
+                {format => 'colon', value => $1}
+            );
+        },
+    },
+
+    'rpm_dash' => {
+        input => 
+        sub {
+            my ($class, $value) = @_;
+
+            if ($value !~ s{\Aperl-}{})
+            {
+                die "rpm_dash value does not start with the 'perl-' prefix.";
+            }
+
+            return $class->_calc_components_from_string(
+                {format => 'dash', value => $value}
+            );
+        },
+    },
+);
+
 sub _calc_components_from_string
 {
     my ($class, $args) = @_;
@@ -147,44 +209,11 @@ sub _calc_components_from_string
     my $format = $args->{format};
     my $value = $args->{value};
 
-    if ($format eq 'colon')
+    if (exists($formats{$format}))
     {
-        return [split(/::/, $value, -1)];
-    }
-    elsif ($format eq 'dash')
-    {
-        return [split(/-/, $value, -1)];
-    }
-    elsif ($format eq 'unix')
-    {
-        if ($value !~ s{\.pm\z}{})
-        {
-            die "Cannot find a .pm suffix in the 'unix' format.";
-        }
+        my $handler = $formats{$format}->{'input'};
 
-        return [split(m{/}, $value, -1)];
-    }
-    elsif ($format eq 'rpm_colon')
-    {
-        if ($value !~ m{\Aperl\(((?:\w+::)*\w+)\)\z})
-        {
-            die "Improper value for rpm_colon";
-        }
-
-        return $class->_calc_components_from_string(
-            {format => 'colon', value => $1}
-        );
-    }
-    elsif ($format eq 'rpm_dash')
-    {
-        if ($value !~ s{\Aperl-}{})
-        {
-            die "rpm_dash value does not start with the 'perl-' prefix.";
-        }
-        
-        return $class->_calc_components_from_string(
-            {format => 'dash', value => $value}
-        );
+        return $class->$handler($value);
     }
     else
     {
