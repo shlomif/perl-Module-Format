@@ -134,14 +134,22 @@ sub from
         die "format must be colon";
     }
 
-    return $class->_new({_components => []});
+    return $class->_new({_components => [split(/::/, $value, -1)]});
 }
 
-=head2 function2
+=head2 my $array_ref = $module->get_components_list()
+
+Returns the components list of the module as an array reference. For
+example for the module C<One::Two::Three> it would be 
+C<["One", "Two", "Three"]>.
 
 =cut
 
-sub function2 {
+sub get_components_list
+{
+    my $self = shift;
+
+    return [ @{$self->_components()} ];
 }
 
 =head1 AUTHOR

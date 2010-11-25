@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 1;
+use Test::More tests => 2;
 
 use Module::Format::Module;
 
@@ -15,4 +15,11 @@ use Module::Format::Module;
 
     # TEST
     ok ($module);
+
+    # TEST
+    is_deeply(
+        $module->get_components_list(),
+        [qw(XML Grammar Fiction)],
+        "get_components_list() is sane.",
+    );
 }
