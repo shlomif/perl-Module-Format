@@ -328,7 +328,9 @@ sub clone
 {
     my $self = shift;
 
-    return ref($self)->_new({_components => $self->get_components_list() } );
+    return ref($self)->from_components(
+        {components => $self->get_components_list() } 
+    );
 }
 
 =head1 AUTHOR
