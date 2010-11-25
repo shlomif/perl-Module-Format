@@ -171,6 +171,10 @@ sub format_as
     {
         return join('/', @{$self->_components()}) . '.pm';
     }
+    elsif ($format eq 'rpm_dash')
+    {
+        return 'perl-' . $self->format_as('dash');
+    }
     else
     {
         die "Unknown format '$format'";
