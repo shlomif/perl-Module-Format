@@ -161,7 +161,11 @@ sub format_as
 
     if ($format eq 'colon')
     {
-        return join("::", @{$self->_components()})
+        return join('::', @{$self->_components()});
+    }
+    elsif ($format eq 'dash')
+    {
+        return join('-', @{$self->_components()});
     }
     else
     {
