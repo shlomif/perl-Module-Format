@@ -167,6 +167,10 @@ sub format_as
     {
         return join('-', @{$self->_components()});
     }
+    elsif ($format eq 'unix')
+    {
+        return join('/', @{$self->_components()}) . '.pm';
+    }
     else
     {
         die "Unknown format '$format'";

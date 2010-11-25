@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 use Module::Format::Module;
 
@@ -31,5 +31,10 @@ use Module::Format::Module;
     # TEST
     is ($module->format_as('dash'), 'XML-Grammar-Fiction',
         "Format as dash is sane.",
+    );
+
+    # TEST
+    is ($module->format_as('unix'), 'XML/Grammar/Fiction.pm',
+        "Format as unix is sane.",
     );
 }
