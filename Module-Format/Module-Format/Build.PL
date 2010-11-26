@@ -10,7 +10,12 @@ my $builder = Test::Run::Builder->new(
     license             => 'mit',
     dist_author         => q{Shlomi Fish <shlomif@cpan.org>},
     dist_version_from   => 'lib/Module/Format.pm',
-    build_requires => {
+    requires =>
+    {
+        'List::MoreUtils' => 0,
+    },
+    build_requires =>
+    {
         'Test::More' => 0,
     },
     add_to_cleanup      => [ 'Module-Format-*' ],
