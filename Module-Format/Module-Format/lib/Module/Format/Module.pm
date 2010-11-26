@@ -162,11 +162,15 @@ C<perl(Catalyst::Plugin::Authentication)> .
 
 =cut
 
+my $dash_re = qr{(?:\w+-)*\w+};
+my $colon_re = qr{(?:\w+::)*\w+};
+
 my @formats_by_priority =
 (
     {
         name => 'rpm_dash',
-        input => 
+        regex => qr{\Aperl-$dash_re\z},
+        input =>
         sub {
             my ($class, $value) = @_;
 
@@ -187,6 +191,7 @@ my @formats_by_priority =
     },
     {
         name => 'rpm_colon',
+        regex => qr{\Aperl\($colon_re\)\z},
         input => sub {
             my ($class, $value) = @_;
 
@@ -207,6 +212,7 @@ my @formats_by_priority =
     },
     {
         name => 'colon',
+        regex => qr{\A$colon_re\z},
         input => sub { 
             my ($class, $value) = @_;
             return [split(/::/, $value, -1)]; 
@@ -219,6 +225,7 @@ my @formats_by_priority =
     },
     {
         name => 'dash',
+        regex => qr{\A$dash_re\z},
         input => sub { 
             my ($class, $value) = @_;
             return [split(/-/, $value, -1)]; 
@@ -231,6 +238,7 @@ my @formats_by_priority =
     },
     {
         name => 'unix',
+        regex => qr{\A(?:\w+/)*\.pm\z},
         input => sub {
             my ($class, $value) = @_;
 
@@ -360,6 +368,33 @@ string to serve as an input, and an optional C<'format_ref'> that will give
 the format that was decided upon.
 
 =cut
+
+sub from_guess
+{
+    my ($class, $args) = @_;
+
+    my $dummy_format_string;
+
+    my $string = $args->{value};
+    my $out_format_ref = ($args->{format_ref} || (\$dummy_format_string));
+
+    # TODO : After the previous line the indentation in vim is reset to the
+    # first column.
+    
+    foreach my $format_record (@formats_by_priority)
+    {
+        my $regex = $format_record->{regex};
+
+        if ($string =~ $regex)
+        {
+            my $format_id = $format_record->{name};
+            # $out_format_ref = ...
+            return $class->from({value => $string, format => $format_id,});
+        }
+    }
+
+    die "Could not guess the format of the value '$string'!";
+}
 
 =head1 AUTHOR
 
