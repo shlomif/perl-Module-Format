@@ -162,72 +162,10 @@ C<perl(Catalyst::Plugin::Authentication)> .
 
 =cut
 
-my %formats =
+my @formats_by_priority =
 (
-    colon =>
     {
-        input => sub { 
-            my ($class, $value) = @_;
-            return [split(/::/, $value, -1)]; 
-        },
-        format => sub {
-            my ($self) = @_;
-
-            return join('::', @{$self->_components()});
-        },
-    },
-    dash =>
-    {
-        input => sub { 
-            my ($class, $value) = @_;
-            return [split(/-/, $value, -1)]; 
-        },
-        format => sub {
-            my ($self) = @_;
-
-            return join('-', @{$self->_components()});
-        },
-    },
-    unix =>
-    {
-        input => sub {
-            my ($class, $value) = @_;
-
-            if ($value !~ s{\.pm\z}{})
-            {
-                die "Cannot find a .pm suffix in the 'unix' format.";
-            }
-
-            return [split(m{/}, $value, -1)];
-        },
-        format => sub {
-            my ($self) = @_;
-
-            return join('/', @{$self->_components()}) . '.pm';
-        },
-    },
-    rpm_colon =>
-    {
-        input => sub {
-            my ($class, $value) = @_;
-
-            if ($value !~ m{\Aperl\(((?:\w+::)*\w+)\)\z})
-            {
-                die "Improper value for rpm_colon";
-            }
-
-            return $class->_calc_components_from_string(
-                {format => 'colon', value => $1}
-            );
-        },
-        format => sub {
-             my ($self) = @_;
-
-             return 'perl(' . $self->format_as('colon') . ')';
-        },
-    },
-
-    'rpm_dash' => {
+        name => 'rpm_dash',
         input => 
         sub {
             my ($class, $value) = @_;
@@ -247,7 +185,72 @@ my %formats =
             return 'perl-' . $self->format_as('dash');
         },
     },
+    {
+        name => 'rpm_colon',
+        input => sub {
+            my ($class, $value) = @_;
+
+            if ($value !~ m{\Aperl\(((?:\w+::)*\w+)\)\z})
+            {
+                die "Improper value for rpm_colon";
+            }
+
+            return $class->_calc_components_from_string(
+                {format => 'colon', value => $1}
+            );
+        },
+        format => sub {
+             my ($self) = @_;
+
+             return 'perl(' . $self->format_as('colon') . ')';
+        },
+    },
+    {
+        name => 'colon',
+        input => sub { 
+            my ($class, $value) = @_;
+            return [split(/::/, $value, -1)]; 
+        },
+        format => sub {
+            my ($self) = @_;
+
+            return join('::', @{$self->_components()});
+        },
+    },
+    {
+        name => 'dash',
+        input => sub { 
+            my ($class, $value) = @_;
+            return [split(/-/, $value, -1)]; 
+        },
+        format => sub {
+            my ($self) = @_;
+
+            return join('-', @{$self->_components()});
+        },
+    },
+    {
+        name => 'unix',
+        input => sub {
+            my ($class, $value) = @_;
+
+            if ($value !~ s{\.pm\z}{})
+            {
+                die "Cannot find a .pm suffix in the 'unix' format.";
+            }
+
+            return [split(m{/}, $value, -1)];
+        },
+        format => sub {
+            my ($self) = @_;
+
+            return join('/', @{$self->_components()}) . '.pm';
+        },
+    },
+
 );
+
+my %formats = (map { $_->{name} => $_ } @formats_by_priority);
 
 sub _calc_components_from_string
 {
@@ -348,6 +351,15 @@ sub is_sane
 
     return all { m{\A\w+\z} } @{$self->_components()};
 }
+
+=head2 my $module = Module::Format::Module->from_guess({ value => $string});
+
+Initialises a module object from a string while trying to guess its format.
+It accepts a hash-ref with the following keys: C<'value'> that points to the
+string to serve as an input, and an optional C<'format_ref'> that will give
+the format that was decided upon.
+
+=cut
 
 =head1 AUTHOR
 
