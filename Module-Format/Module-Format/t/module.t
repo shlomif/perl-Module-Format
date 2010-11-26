@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 54;
+use Test::More tests => 58;
 
 use Module::Format::Module;
 
@@ -374,5 +374,33 @@ use Module::Format::Module;
     # TEST
     is ($module->format_as('rpm_colon'), 'perl(Acme::Raise::Kwalitee)',
         "format_as works for from_guess()ed module",
+    );
+}
+
+{
+    my $chosen_format;
+    my $module = Module::Format::Module->from_guess(
+        {
+            value => 'Foo::Bar::Baz',
+            format_ref => \$chosen_format,
+        }
+    );
+    
+    # TEST
+    ok ($module, "from_guess initialises a module.");
+
+    # TEST
+    is_deeply(
+        $module->get_components_list(),
+        [qw(Foo Bar Baz)],
+        "from_guess got good components.",
+    );
+
+    # TEST
+    is ($chosen_format, 'colon', 'chosen format is colon in this case');
+
+    # TEST
+    is ($module->format_as('dash'), 'Foo-Bar-Baz',
+        "format_as works for from_guess()ed colon module",
     );
 }
