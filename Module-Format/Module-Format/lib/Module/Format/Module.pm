@@ -388,7 +388,9 @@ sub from_guess
         if ($string =~ $regex)
         {
             my $format_id = $format_record->{name};
-            # $out_format_ref = ...
+
+            ${$out_format_ref} = $format_id;
+
             return $class->from({value => $string, format => $format_id,});
         }
     }
