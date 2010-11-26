@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 39;
+use Test::More tests => 41;
 
 use Module::Format::Module;
 
@@ -261,3 +261,27 @@ use Module::Format::Module;
         "Format as rpm_colon is sane.",
     );
 }
+
+{
+    my $module = Module::Format::Module->from_components(
+        {
+            components => [qw(XML Grammar Fiction)],
+        }
+    );
+
+    # TEST
+    ok (scalar($module->is_sane()), "Module is sane.");
+}
+
+{
+    my $module = Module::Format::Module->from_components(
+        {
+            components => ['XML', 'F@L',],
+        }
+    );
+
+    # TEST
+    ok (!scalar($module->is_sane()), "Module is not sane.");
+}
+
+
