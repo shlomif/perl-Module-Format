@@ -158,6 +158,11 @@ Like colon only wrapped inside C<perl(...)> - useful for rpm provides for
 individual modules. E.g: C<perl(XML::RSS)>, 
 C<perl(Catalyst::Plugin::Authentication)> .
 
+=item * 'debian'
+
+Debian package format, such as C<libxml-rss-perl>,
+C<libcatalyst-plugin-authentication-perl> . Output only.
+
 =back
 
 =cut
@@ -255,7 +260,14 @@ my @formats_by_priority =
             return join('/', @{$self->_components()}) . '.pm';
         },
     },
+    {
+        name => 'debian',
+        format => sub {
+            my ($self) = @_;
 
+            return 'lib' . lc($self->format_as('dash')) . '-perl';
+        },
+    },
 );
 
 my %formats = (map { $_->{name} => $_ } @formats_by_priority);
@@ -269,9 +281,14 @@ sub _calc_components_from_string
 
     if (exists($formats{$format}))
     {
-        my $handler = $formats{$format}->{'input'};
-
-        return $class->$handler($value);
+        if (my $handler = $formats{$format}->{'input'})
+        {
+            return $class->$handler($value);
+        }
+        else
+        {
+            die "Format $format is output-only!";
+        }
     }
     else
     {
@@ -383,15 +400,16 @@ sub from_guess
     
     foreach my $format_record (@formats_by_priority)
     {
-        my $regex = $format_record->{regex};
-
-        if ($string =~ $regex)
+        if (my $regex = $format_record->{regex})
         {
-            my $format_id = $format_record->{name};
+            if ($string =~ $regex)
+            {
+                my $format_id = $format_record->{name};
 
-            ${$out_format_ref} = $format_id;
+                ${$out_format_ref} = $format_id;
 
-            return $class->from({value => $string, format => $format_id,});
+                return $class->from({value => $string, format => $format_id,});
+            }
         }
     }
 
