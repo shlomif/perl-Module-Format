@@ -3,6 +3,8 @@ package Module::Format::Module;
 use warnings;
 use strict;
 
+use List::MoreUtils qw(all);
+
 =head1 NAME
 
 Module::Format::Module - encapsulates a single Perl module.
@@ -331,6 +333,20 @@ sub clone
     return ref($self)->from_components(
         {components => $self->get_components_list() } 
     );
+}
+
+=head2 my $bool = $module->is_sane();
+
+Returns a boolean depending on if the component of the module do not contain
+any funny character (only alphanumeric characters and underscore.).
+
+=cut
+
+sub is_sane
+{
+    my $self = shift;
+
+    return all { m{\A\w+\z} } @{$self->_components()};
 }
 
 =head1 AUTHOR
