@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 41;
+use Test::More tests => 43;
 
 use Module::Format::Module;
 
@@ -284,4 +284,17 @@ use Module::Format::Module;
     ok (!scalar($module->is_sane()), "Module is not sane.");
 }
 
+{
+    my $module = Module::Format::Module->from_guess({value => "XML::RSS"});
+    
+    # TEST
+    ok ($module, "from_guess initialises a module.");
+
+    # TEST
+    is_deeply(
+        $module->get_components_list(),
+        [qw(XML RSS)],
+        "from_guess got good components.",
+    );
+}
 
