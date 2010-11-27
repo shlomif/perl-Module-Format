@@ -12,11 +12,20 @@ my $builder = Test::Run::Builder->new(
     dist_version_from   => 'lib/Module/Format.pm',
     requires =>
     {
+        'Getopt::Long' => '2.36',
         'List::MoreUtils' => 0,
+        'Pod::Usage' => 0,
+        'strict' => 0,
+        'warnings' => 0,
     },
     build_requires =>
     {
         'Test::More' => 0,
+        'vars' => 0,
+    },
+    configure_requires =>
+    {
+        'Module::Build' => 0,
     },
     add_to_cleanup      => [ 'Module-Format-*' ],
     create_makefile_pl => 'traditional',
