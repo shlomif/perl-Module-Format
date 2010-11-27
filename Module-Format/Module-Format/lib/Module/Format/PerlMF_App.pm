@@ -3,7 +3,9 @@ package Module::Format::PerlMF_App;
 use strict;
 use warnings;
 
+
 use Getopt::Long qw(GetOptionsFromArray);
+use Pod::Usage;
 
 use Module::Format::ModuleList;
 
@@ -99,6 +101,20 @@ sub run
 
     my $op = shift(@$argv);
 
+    if (!defined($op))
+    {
+        die "You did not specify any arguments - see --help";
+    }
+
+    if (($op eq "-h") || ($op eq "--help"))
+    {
+        pod2usage(1);
+    }
+    elsif ($op eq "--man")
+    {
+        pod2usage(-verbose => 2);
+    }
+
     if (! exists( $ops_to_formats{$op} ))
     {
         die "Unknown op '$op'.";
@@ -109,13 +125,27 @@ sub run
     my $delim = ' ';
     my $suffix = "\n";
 
+    my $help = 0;
+    my $man = 0;
     if (! (my $ret = GetOptionsFromArray(
         $argv,
         '0!' => sub { $delim = "\0"; $suffix = q{}; },
         'n!' => sub { $delim = "\n"; $suffix = "\n"; },
+        'help|h' => \$help,
+        man => \$man,
     )))
     {
         die "GetOptions failed!";
+    }
+
+    if ($help)
+    {
+        pod2usage(1);
+    }
+
+    if ($man)
+    {
+        pod2usage(-verbose => 2);
     }
 
     my @strings = @$argv;
