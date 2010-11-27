@@ -5,7 +5,7 @@ use strict;
 
 =head1 NAME
 
-Module::Format::ModuleList - an ordered list of Module::Format::Modules.
+Module::Format::ModuleList - an ordered list of L<Module::Format::Module>.
 
 =head1 VERSION
 
@@ -17,11 +17,41 @@ our $VERSION = '0.0.1';
 
 =head1 SYNOPSIS
 
-TODO : FILL IN.
+    use Module::Format::ModuleList;
+
+    my $list = Module::Format::ModuleList->new(
+        {
+            modules =>
+            [
+                Module::Format::Module->from_guess('XML::RSS'),
+                Module::Format::Module->from_guess('Data-Dumper'),
+            ],
+        }
+    );
+
+    foreach my $name (@{$list->format_as('rpm_colon')})
+    {
+        print "$name\n";    
+    }
+
+    my $list = Module::Format::ModuleList->sane_from_guesses(
+        {
+            values =>
+            [qw/
+                Algorithm::Permutations
+                rpm(Foo::Bar::Baz)
+                perl-HTML-TreeBuilder-LibXML
+            /],
+        },
+    )
+
+=cut
+
+use Module::Format::Module;
 
 =head1 AUTHOR
 
-Shlomi Fish, C<< <shlomif at cpan.org> >>
+Shlomi Fish, L<http://www.shlomifish.org/>
 
 =head1 BUGS
 
