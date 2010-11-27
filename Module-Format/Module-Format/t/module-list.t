@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 use Module::Format::ModuleList;
 
@@ -40,4 +40,11 @@ use Module::Format::ModuleList;
         );
 
     }
+
+    # TEST
+    is_deeply(
+        $list->format_as('rpm_dash'),
+        [qw(perl-XML-RSS perl-Data-Dumper)],
+        'format_as on list is working.',
+    );
 }

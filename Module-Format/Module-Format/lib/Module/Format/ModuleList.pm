@@ -119,6 +119,20 @@ sub get_modules_list_copy
     return [ @{$self->_modules()} ];
 }
 
+=head2 my $array_ref_of_strings = $list->format_as($format)
+
+Returns a list containing all the modules formatted in the $format . See
+L<Module::Format::Module> for the available formats.
+
+=cut
+
+sub format_as
+{
+    my ($self, $format) = @_;
+
+    return [map { $_->format_as($format) } @{$self->_modules()}];
+}
+
 =head1 AUTHOR
 
 Shlomi Fish, L<http://www.shlomifish.org/>
