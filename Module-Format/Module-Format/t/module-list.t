@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 2;
+use Test::More tests => 4;
 
 use Module::Format::ModuleList;
 
@@ -24,6 +24,20 @@ use Module::Format::ModuleList;
 
         # TEST
         is (scalar(@$modules), 2, "Got 2 modules");
+
+        # TEST
+        is_deeply(
+            $modules->[0]->get_components_list(),
+            [qw(XML RSS)],
+            "XML-RSS has the right components.",
+        );
+
+        # TEST
+        is_deeply(
+            $modules->[1]->get_components_list(),
+            [qw(Data Dumper)],
+            "XML-RSS has the right components.",
+        );
 
     }
 }
