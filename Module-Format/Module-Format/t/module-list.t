@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 1;
+use Test::More tests => 2;
 
 use Module::Format::ModuleList;
 
@@ -18,4 +18,12 @@ use Module::Format::ModuleList;
 
     # TEST
     ok ($list, "Module::Format::Module->new returns true.");
+
+    {
+        my $modules = $list->get_modules_list_copy();
+
+        # TEST
+        is (scalar(@$modules), 2, "Got 2 modules");
+
+    }
 }

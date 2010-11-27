@@ -105,6 +105,20 @@ sub _init
     return;
 }
 
+=head2 my $array_ref = $self->get_modules_list_copy()
+
+Returns a shallow copy of the modules list contained in the object. Useful
+for debugging.
+
+=cut
+
+sub get_modules_list_copy
+{
+    my ($self) = @_;
+
+    return [ @{$self->_modules()} ];
+}
+
 =head1 AUTHOR
 
 Shlomi Fish, L<http://www.shlomifish.org/>
