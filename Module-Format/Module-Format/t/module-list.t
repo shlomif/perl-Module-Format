@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 use Module::Format::ModuleList;
 
@@ -47,4 +47,12 @@ use Module::Format::ModuleList;
         [qw(perl-XML-RSS perl-Data-Dumper)],
         'format_as on list is working.',
     );
+
+    # TEST
+    is_deeply(
+        $list->format_as('colon'),
+        [qw(XML::RSS Data::Dumper)],
+        'format_as on list is working (colon format).',
+    );
+
 }
