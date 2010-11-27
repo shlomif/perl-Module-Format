@@ -14,7 +14,7 @@ if ($@)
     plan skip_all => "Test::Trap not found.";
 }
 
-plan tests => 3;
+plan tests => 4;
 
 # TEST
 ok(1, "Test is OK.");
@@ -50,5 +50,22 @@ ok(1, "Test is OK.");
         $trap->stdout(), 
         qq{Data::Dump XML::Grammar::Fortune\n},
         'as_colon works as expected.',
+    );
+}
+
+{
+    trap(sub {
+        Module::Format::PerlMF_App->new(
+            {
+                argv => [qw/deb Foo::Bar::Baz Quux-Stanley/],
+            },
+        )->run();
+    });
+
+    # TEST
+    is (
+        $trap->stdout(), 
+        qq{libfoo-bar-baz-perl libquux-stanley-perl\n},
+        'deb works as expected.',
     );
 }
