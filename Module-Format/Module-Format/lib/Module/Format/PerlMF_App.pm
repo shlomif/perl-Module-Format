@@ -71,6 +71,26 @@ Actually run the command line application.
 
 =cut
 
+my %ops_to_formats =
+(
+    'as_rpm_colon' => 'rpm_colon',
+    'rpm_colon' => 'rpm_colon',
+    'as_rpm_c' => 'rpm_colon',
+    'rpm_c' => 'rpm_colon',
+    'as_rpm_dash' => 'rpm_dash',
+    'rpm_dash' => 'rpm_dash',
+    'as_rpm_d' => 'rpm_dash',
+    'rpm_d' => 'rpm_dash',
+    'dash' => 'dash',
+    'as_dash' => 'dash',
+    'colon' => 'colon',
+    'as_colon' => 'colon',
+    'deb' => 'debian',
+    'as_deb' => 'debian',
+    'debian' => 'debian',
+    'as_debian' => 'debian',
+);
+
 sub run
 {
     my ($self) = @_;
@@ -79,10 +99,12 @@ sub run
 
     my $op = shift(@$argv);
 
-    if ($op ne "as_rpm_colon")
+    if (! exists( $ops_to_formats{$op} ))
     {
         die "Unknown op '$op'.";
     }
+
+    my $format = $ops_to_formats{$op};
 
     if (! (my $ret = GetOptionsFromArray(
         $argv
@@ -99,7 +121,7 @@ sub run
         }
     );
 
-    print join(' ', @{$module_list_obj->format_as('rpm_colon')}), "\n";
+    print join(' ', @{$module_list_obj->format_as($format)}), "\n";
 
     return;
 }
