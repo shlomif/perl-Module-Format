@@ -133,6 +133,35 @@ sub format_as
     return [map { $_->format_as($format) } @{$self->_modules()}];
 }
 
+=head2 my $list_obj = Module::Format::ModuleList->sane_from_guesses({values => \@list_of_strings});
+
+Initialises a module list object from a list of strings by using 
+L<Module::Format::Module>'s from_guess on each string and while checking the 
+guesses for sanity. See the synposis for an example.
+
+=cut
+
+sub sane_from_guesses
+{
+    my ($class, $args) = @_;
+
+    my @modules;
+
+    foreach my $string (@{$args->{'values'}})
+    {
+        my $module = Module::Format::Module->from_guess({value => $string});
+
+        if (! $module->is_sane())
+        {
+            die "Value '$string' does not evaluate as a sane module.";
+        }
+
+        push @modules, $module;
+    }
+
+    return $class->new({modules => \@modules});  
+}
+
 =head1 AUTHOR
 
 Shlomi Fish, L<http://www.shlomifish.org/>
