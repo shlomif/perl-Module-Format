@@ -106,8 +106,12 @@ sub run
 
     my $format = $ops_to_formats{$op};
 
+    my $delim = ' ';
+    my $suffix = "\n";
+
     if (! (my $ret = GetOptionsFromArray(
-        $argv
+        $argv,
+        '0!' => sub { $delim = "\0"; $suffix = q{}; },
     )))
     {
         die "GetOptions failed!";
@@ -121,7 +125,7 @@ sub run
         }
     );
 
-    print join(' ', @{$module_list_obj->format_as($format)}), "\n";
+    print join($delim, @{$module_list_obj->format_as($format)}), $suffix;
 
     return;
 }
