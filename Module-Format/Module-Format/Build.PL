@@ -20,6 +20,7 @@ my $builder = Test::Run::Builder->new(
     },
     add_to_cleanup      => [ 'Module-Format-*' ],
     create_makefile_pl => 'traditional',
+    script_files => ["script/perlmf"],
 );
 
 $builder->create_build_script();
