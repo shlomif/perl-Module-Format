@@ -9,6 +9,7 @@ MANIFEST.SKIP
 README
 t/00-load.t
 t/module.t
+t/module-list.t
 t/pod-coverage.t
 t/pod.t
 Makefile.PL
