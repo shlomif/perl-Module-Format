@@ -112,6 +112,7 @@ sub run
     if (! (my $ret = GetOptionsFromArray(
         $argv,
         '0!' => sub { $delim = "\0"; $suffix = q{}; },
+        'n!' => sub { $delim = "\n"; $suffix = "\n"; },
     )))
     {
         die "GetOptions failed!";

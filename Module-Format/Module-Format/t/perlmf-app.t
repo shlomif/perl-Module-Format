@@ -14,7 +14,7 @@ if ($@)
     plan skip_all => "Test::Trap not found.";
 }
 
-plan tests => 5;
+plan tests => 6;
 
 # TEST
 ok(1, "Test is OK.");
@@ -84,5 +84,22 @@ ok(1, "Test is OK.");
         $trap->stdout(), 
         qq{perl(Data::Dump)\0perl(XML::Grammar::Fortune)},
         'as_rpm_colon -0 works as expected.',
+    );
+}
+
+{
+    trap(sub {
+        Module::Format::PerlMF_App->new(
+            {
+                argv => [qw/as_rpm_colon -n Data::Dump XML-Grammar-Fortune/],
+            },
+        )->run();
+    });
+
+    # TEST
+    is (
+        $trap->stdout(), 
+        qq{perl(Data::Dump)\nperl(XML::Grammar::Fortune)\n},
+        '-n works as expected.',
     );
 }
