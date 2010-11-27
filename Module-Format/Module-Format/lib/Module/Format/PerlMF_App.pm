@@ -3,6 +3,10 @@ package Module::Format::PerlMF_App;
 use strict;
 use warnings;
 
+use Getopt::Long qw(GetOptionsFromArray);
+
+use Module::Format::ModuleList;
+
 =head1 NAME
 
 Module::Format::PerlMF_App - implements the perlmf command-line application.
@@ -71,7 +75,33 @@ sub run
 {
     my ($self) = @_;
 
-    die "Foo";
+    my $argv = $self->_argv();
+
+    my $op = shift(@$argv);
+
+    if ($op ne "as_rpm_colon")
+    {
+        die "Unknown op '$op'.";
+    }
+
+    if (! (my $ret = GetOptionsFromArray(
+        $argv
+    )))
+    {
+        die "GetOptions failed!";
+    }
+
+    my @strings = @$argv;
+
+    my $module_list_obj = Module::Format::ModuleList->sane_from_guesses(
+        {
+            values => \@strings,
+        }
+    );
+
+    print join(' ', @{$module_list_obj->format_as('rpm_colon')}), "\n";
+
+    return;
 }
 
 =head1 AUTHOR
