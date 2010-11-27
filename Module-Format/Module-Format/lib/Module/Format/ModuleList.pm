@@ -23,8 +23,8 @@ our $VERSION = '0.0.1';
         {
             modules =>
             [
-                Module::Format::Module->from_guess('XML::RSS'),
-                Module::Format::Module->from_guess('Data-Dumper'),
+                Module::Format::Module->from_guess({ value => 'XML::RSS'}),
+                Module::Format::Module->from_guess({ value => 'Data-Dumper'}),
             ],
         }
     );
@@ -45,9 +45,65 @@ our $VERSION = '0.0.1';
         },
     )
 
+=head1 FUNCTIONS
+
 =cut
 
 use Module::Format::Module;
+
+=head2 my $list = Module::Format::ModuleList->new({ modules => \@list})
+
+The generic constructor. Initialises a new module list from a @list which
+must be an array of L<Module::Format::Module> modules.
+
+=cut
+
+sub new
+{
+    my $class = shift;
+    my $self = bless {}, $class;
+    $self->_init(@_);
+    return $self;
+}
+
+sub _modules
+{
+    my $self = shift;
+
+    if (@_) {
+        $self->{_modules} = shift;
+    }
+
+    return $self->{_modules};
+}
+
+sub _add_module
+{
+    my ($self, $module) = @_;
+
+    if (not $module->isa('Module::Format::Module'))
+    {
+        die "Module is " . ref($module) . " instead of Module::Format::Module.";
+    }
+
+    push @{$self->_modules()}, $module;
+
+    return;
+}
+
+sub _init
+{
+    my ($self, $args) = @_;
+
+    $self->_modules([]);
+
+    foreach my $module (@{$args->{modules}})
+    {
+        $self->_add_module($module);
+    }
+
+    return;
+}
 
 =head1 AUTHOR
 
