@@ -1,5 +1,6 @@
 Revision history for Module-Format
 
+        - Add keywords and resources to the Build.PL/META.yml.
         - Removed the depenedency on List::MoreUtils.
 
 0.0.1   Sat Nov 27 20:23:20 IST 2010
