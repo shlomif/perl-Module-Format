@@ -1,4 +1,6 @@
 Revision history for Module-Format
 
+        - Removed the depenedency on List::MoreUtils.
+
 0.0.1   Sat Nov 27 20:23:20 IST 2010
         First version, released on an unsuspecting world.
