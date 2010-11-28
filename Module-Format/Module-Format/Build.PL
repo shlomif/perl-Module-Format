@@ -13,7 +13,6 @@ my $builder = Test::Run::Builder->new(
     requires =>
     {
         'Getopt::Long' => '2.36',
-        'List::MoreUtils' => 0,
         'Pod::Usage' => 0,
         'strict' => 0,
         'warnings' => 0,
