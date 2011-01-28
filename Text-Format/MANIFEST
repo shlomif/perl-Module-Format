@@ -1,0 +1,6 @@
+Changes
+lib/Text/Format.pm
+t/format.t
+t/justify.t
+MANIFEST
+Makefile.PL
