@@ -1,5 +1,12 @@
 Revision history for Perl extension Text::Format.
 
+0.53 Fri Jan 28 13:02:01 IST 2011
+    - Adopted by Shlomi Fish (while disclaiming all rights).
+    - Convert the build system to Module-Build, while adding keywords
+    and resources.
+    - The archive name is now the more standard Text-Format-0.53.tar.gz.
+    - Fix some typos in the documentation.
+
 0.52 Sun Mar 29 11:32:50 1998
     - fixed some warnings that appeared when using hanging indents
       (tagged paragraphs).  Also added tha ability to use a list
