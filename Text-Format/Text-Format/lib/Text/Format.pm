@@ -9,7 +9,7 @@ B<Text::Format> - Various subroutines to format text.
 
     use Text::Format;
 
-    $text = Text::Format->new ( 
+    my $text = Text::Format->new ( 
         {
             text           =>  [], # all
             columns        =>  72, # format, paragraphs, center
@@ -30,7 +30,7 @@ B<Text::Format> - Various subroutines to format text.
         }
     ); # these are the default values
 
-    %abbr = (foo => 1, bar => 1);
+    my %abbr = (foo => 1, bar => 1);
     $text->abbrevs(\%abbr);
     $text->abbrevs();
     $text->abbrevs({foo => 1,bar => 1});
@@ -57,7 +57,8 @@ let you make a simple word list which could be indented or right
 aligned.  There is a chance for croaking if you try to subvert the
 module.  If you don't pass in text then the internal text is worked on,
 though not modfied.
-I<Text::Format> is meant for more powerful text formatting than
+
+I<Text::Format> is meant for more powerful text formatting than what
 I<Text::Wrap> allows.  I also have a module called I<Text::NWrap> that
 is meant as a direct replacement for I<Text::Wrap>.  I<Text::NWrap>
 requires I<Text::Format> since it uses I<Text::Format-E<gt>format> to do the
@@ -121,7 +122,7 @@ formatted.
 =item B<new> \%HASH || NOTHING
 
 Instantiates the object.  If you pass a reference to a hash, or an
-anonymous hash then it's used in setting attributes.
+anonymous hash then it is used in setting attributes.
 
 =item B<config> \%HASH
 
@@ -205,7 +206,7 @@ Set whether you want to use the non-breaking space feature.
 =item B<noBreakRegex> \%HASH || NOTHING
 
 Pass in a reference to your hash that would hold the regexes on which not
-to break.  Returns the hash.
+to break.  Without any arguments, it returns the hash.
 eg.
 
     {'^Mrs?\.$' => '^\S+$','^\S+$' => '^(?:S|J)r\.$'}
@@ -240,19 +241,23 @@ abbreviations.
 
     use Text::Format;
 
-    $text = new Text::Format;
+    my $text = Text::Format->new;
+
     $text->rightFill(1);
     $text->columns(65);
     $text->tabstop(4);
+
     print $text->format("a line to format to an indented regular
             paragraph using 65 character wide display");
     print $text->paragraphs("paragraph one","paragraph two");
     print $text->center("hello world","nifty line 2");
     print $text->expand("\t\thello world\n","hmm,\twell\n");
     print $text->unexpand("    hello world\n","    hmm");
+
     $text->config({columns => 132, tabstop => 4});
 
     $text = Text::Format->new();
+
     print $text->format(@text);
     print $text->paragraphs(@text);
     print $text->center(@text);
@@ -264,6 +269,7 @@ abbreviations.
 
     $text = Text::Format->new
         ({tabstop => 4,bodyIndent => 4,text => \@text});
+
     print $text->format();
     print $text->paragraphs();
     print $text->center();
@@ -274,10 +280,10 @@ abbreviations.
 
 =head1 BUGS
 
-Line length can exceed columns specified if columns is set to a small
-number and long words plus leading whitespace exceed column length
-specified.  Actually I see this as a feature since it can be used to
-make up a nice word list.
+Line length can exceed the number of specified columns 
+if columns is set to a small number and long words plus leading whitespace 
+exceed the specified column length.  Actually I see this as a feature since it
+can be used to make up a nice word list.
 
 =head1 AUTHOR
 
@@ -287,23 +293,31 @@ Copyright (c) 1998 Gabor Egressy.  All rights reserved.  All wrongs
 reversed.  This program is free software; you can redistribute and/or
 modify it under the same terms as Perl itself.
 
+Adopted and modified by Shlomi Fish, L<http://www.shlomifish.org/> - all
+rights disclaimed.
+
 =head1 ACKNOWLEDGMENTS
 
 B<Tom Phoenix>
-found bug with code for two spaces at end of sentence and provided code
-fragment for a better solution, some preliminary suggestions on design
+
+Found a bug with code for two spaces at the end of the sentence and provided
+a code fragment for a better solution. Also some preliminary suggestions on
+the design.
 
 B<Brad Appleton>
-suggesting and explanation of hanging indents, suggestion for
+
+Suggestion and explanation of hanging indents, suggestion for
 non-breaking whitespace, general suggestions with regard to interface
-design
+design.
 
 B<Byron Brummer>
-suggestion for better interface design and object design, code for
-better implementation of getting abbreviations
+
+Suggestion for better interface design and object design, code for
+better implementation of getting abbreviations.
 
 B<H. Merijn Brand>
-suggestion for justify feature and original code for doing the
+
+Suggestion for a justify feature and original code for doing the
 justification.  I changed the code to take into account the extra space
 at end of sentence feature.
 
