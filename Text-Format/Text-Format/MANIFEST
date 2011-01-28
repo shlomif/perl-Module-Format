@@ -6,3 +6,4 @@ t/format.t
 t/justify.t
 MANIFEST
 Makefile.PL
+META.yml
