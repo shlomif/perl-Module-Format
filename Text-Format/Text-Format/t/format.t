@@ -3,14 +3,16 @@
 
 ######################### We start with some black magic to print on failure.
 
-# Change 1..1 below to 1..last_test_to_print .
-# (It may become useful if the test is moved to ./t subdirectory.)
+use strict;
+use warnings;
 
-BEGIN { $| = 1; print "1..5\n"; }
-END {print "not ok 1\n" unless $loaded;}
-use Text::Format 0.43;
-$loaded = 1;
-print "ok 1\n";
+# Should be 5.
+use Test::More tests => 5;
+
+use Text::Format;
+
+# TEST
+ok(1, "Text::Format loaded.");
 
 ######################### End of black magic.
 
@@ -18,34 +20,26 @@ print "ok 1\n";
 # (correspondingly "not ok 13") depending on the success of chunk 13
 # of the test code):
 
-$text = new Text::Format;
-@text = $text->paragraphs("hello world","cool");
-if(@text == 2) {
-    print "ok 2\n";
-}
+{
+    my $text = Text::Format->new;
 
-@text = $text->format("hello world","cool");
-if(@text == 1) {
-    print "ok 3\n";
-}
-else {
-    print "not ok 3\n";
-}
+    my @results = $text->paragraphs("hello world","cool");
+    # TEST
+    is (scalar(@results), 2, "2 results.");
 
-@text = $text->center("hello world","cool");
-if(@text == 2) {
-    print "ok 4\n";
-}
-else {
-    print "not ok 3\n";
-}
+    @results = $text->format("hello world","cool");
+    # TEST
+    is (scalar(@results), 1, "formatting as one line.");
 
-$text->columns(10);
-$text->bodyIndent(8);
-@text = $text->format("hello world","cool");
-if(@text == 3) {
-    print "ok 5\n";
-}
-else {
-    print "not ok 3\n";
+    @results = $text->center("hello world","cool");
+    # TEST
+    is (scalar(@results), 2, "center()");
+
+    $text->columns(10);
+    $text->bodyIndent(8);
+
+    @results = $text->format("hello world","cool");
+
+    # TEST
+    is (scalar(@results), 3, "columns and bodyIndent");
 }
