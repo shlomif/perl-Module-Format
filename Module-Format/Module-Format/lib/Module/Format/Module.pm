@@ -241,7 +241,7 @@ my @formats_by_priority =
     },
     {
         name => 'unix',
-        regex => qr{\A(?:\w+/)*\.pm\z},
+        regex => qr{\A(?:\w+/)*\w+\.pm\z},
         input => sub {
             my ($class, $value) = @_;
 

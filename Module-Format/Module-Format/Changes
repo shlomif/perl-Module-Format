@@ -1,8 +1,11 @@
 Revision history for Module-Format
 
-0.0.3   Sat Jun 11 16:36:44 IDT 2011
+0.0.4   Sat Jun 11 16:36:44 IDT 2011
         - Small improvement to the script/perlmf POD.
 
+0.0.3   Wed Dec  1 13:03:47 IST 2010
+        - Correct a bug with the regex of guessing a 
+        MooseX/Role/BuildInstanceOf.pm -like unix path.
 0.0.2   Sun Nov 28 22:13:26 IST 2010
         - Add keywords and resources to the Build.PL/META.yml.
         - Removed the depenedency on List::MoreUtils.
