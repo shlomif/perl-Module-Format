@@ -15,11 +15,11 @@ exit(0);
 pelrmf -- A command line tool for converting Perl module identifiers to
 certain formats.
 
-=head1 SYNOPSIS
+=head1 USAGE
 
-perlmf B<operation> [options] [Module names]
+    perlmf <operation> [options] [Module names]
 
-Options:
+=head1 OPTIONS
 
     -0 - emit the module names separated by NUL (\0)
     -n - emit the module names separated by newlines (\n)
@@ -82,7 +82,6 @@ automatically be notified of progress on your bug as I make changes.
 You can find documentation for this module with the perldoc command.
 
     perldoc Module::Format::Module
-
 
 You can also look for information at:
 
