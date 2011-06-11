@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 59;
+use Test::More tests => 63;
 
 use Module::Format::Module;
 
@@ -407,5 +407,33 @@ use Module::Format::Module;
     # TEST
     is ($module->format_as('dash'), 'Foo-Bar-Baz',
         "format_as works for from_guess()ed colon module",
+    );
+}
+
+{
+    my $chosen_format;
+    my $module = Module::Format::Module->from_guess(
+        {
+            value => 'MooseX/Role/BuildInstanceOf.pm',
+            format_ref => \$chosen_format,
+        }
+    );
+    
+    # TEST
+    ok ($module, "from_guess initialises a module.");
+
+    # TEST
+    is_deeply(
+        $module->get_components_list(),
+        [qw(MooseX Role BuildInstanceOf)],
+        "from_guess got good components.",
+    );
+
+    # TEST
+    is ($chosen_format, 'unix', 'chosen format was initialised');
+
+    # TEST
+    is ($module->format_as('dash'), 'MooseX-Role-BuildInstanceOf',
+        "format_as works for from_guess()ed module",
     );
 }
