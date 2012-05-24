@@ -3,7 +3,7 @@ require 5.003;
 
 =head1 NAME
 
-B<Text::Format> - Various subroutines to format text.
+Text::Format - various subroutines to format text.
 
 =head1 SYNOPSIS
 
@@ -329,7 +329,7 @@ use Carp;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = '0.53';
+$VERSION = '0.54';
 
 # local abbreviations, you can add your own with abbrevs()
 my %abbrev = (
