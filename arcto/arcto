@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+require 'getoptlong'
+require 'rdoc/usage'
+
+opts = GetoptLong.new(
+    [ '--help', '-h', GetoptLong::NO_ARGUMENT ]
+)
+
+opts.each do |opt, arg|
+    case opt
+        when '--help'
+          RDoc::usage
+    end
+end
+
+ARGV.each do |fn_iter|
+    fn = "" + fn_iter
+    if (not File.file?(fn)) then
+        next 
+    end
+
+    orig_fn = "" + fn
+    if (fn.sub!(/\.gz\z/,'')) then
+        s = File.stat(orig_fn)
+        system("gunzip", orig_fn)
+        system("xz", fn)
+        File.utime(s.atime, s.mtime, "#{fn}.xz")
+    end
+end
