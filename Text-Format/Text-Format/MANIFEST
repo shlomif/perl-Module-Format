@@ -5,6 +5,7 @@ lib/Text/Format.pm
 t/format.t
 t/justify.t
 t/pod.t
+t/pod-coverage.t
 MANIFEST
 Makefile.PL
 META.yml
