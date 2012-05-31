@@ -1,5 +1,12 @@
 Revision history for Perl extension Text::Format.
 
+    - Fix small spelling error in the POD:
+        - closing https://rt.cpan.org/Ticket/Display.html?id=77481
+        - Thanks to Salvatore Bonaccorso and the Debian people
+        for the report and the patch.
+        - ( There were also some duplicate bug report in the rt.cpan.org queue 
+        by accident. )
+
 0.54 Fri May 25 02:33:47 IDT 2012
     - Convert t/justify.t and t/format.t to Test::More, "use strict;"
     and "use warnings;" and cleaned them up.
