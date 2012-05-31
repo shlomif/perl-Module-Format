@@ -13,6 +13,7 @@ Module-Format/Module-Format/MYMETA.yml
 Text-Format/Text-Format/blib
 Text-Format/Text-Format/_build
 Text-Format/Text-Format/Build
+Text-Format/Text-Format/Makefile.PL
 Text-Format/Text-Format/META.json
 Text-Format/Text-Format/META.yml
 Text-Format/Text-Format/MYMETA.json
