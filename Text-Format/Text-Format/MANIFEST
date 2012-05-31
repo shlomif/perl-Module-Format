@@ -4,6 +4,7 @@ inc/Test/Run/Builder.pm
 lib/Text/Format.pm
 t/format.t
 t/justify.t
+t/pod.t
 MANIFEST
 Makefile.PL
 META.yml
