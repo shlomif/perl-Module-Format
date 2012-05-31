@@ -1,5 +1,6 @@
 Revision history for Perl extension Text::Format.
 
+0.55 Thu May 31 09:17:32 IDT 2012
     - Fix small spelling error in the POD:
         - closing https://rt.cpan.org/Ticket/Display.html?id=77481
         - Thanks to Salvatore Bonaccorso and the Debian people
