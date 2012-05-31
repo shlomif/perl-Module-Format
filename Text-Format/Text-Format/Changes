@@ -1,6 +1,8 @@
 Revision history for Perl extension Text::Format.
 
     - Add "use warnings;" to lib/Text/Format.pm .
+    - Add t/pod.t .
+    - Add t/pod-coverage.t .
 
 0.55 Thu May 31 09:17:32 IDT 2012
     - Fix small spelling error in the POD:
