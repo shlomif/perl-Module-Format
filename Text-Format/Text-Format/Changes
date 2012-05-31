@@ -1,5 +1,7 @@
 Revision history for Perl extension Text::Format.
 
+    - Add "use warnings;" to lib/Text/Format.pm .
+
 0.55 Thu May 31 09:17:32 IDT 2012
     - Fix small spelling error in the POD:
         - closing https://rt.cpan.org/Ticket/Display.html?id=77481
