@@ -10,6 +10,7 @@ my $builder = Test::Run::Builder->new(
     license             => 'perl',
     dist_author         => q{Shlomi Fish <shlomif@cpan.org>},
     dist_version_from   => 'lib/Text/Format.pm',
+    dist_abstract => "Format text",
     requires =>
     {
         'Carp' => 0,
