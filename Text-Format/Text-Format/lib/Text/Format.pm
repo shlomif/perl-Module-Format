@@ -1,19 +1,15 @@
 package Text::Format;
-
 require 5.003;
-
-use strict;
-use warnings;
 
 =head1 NAME
 
-Text::Format - various subroutines to format text.
+B<Text::Format> - Various subroutines to format text.
 
 =head1 SYNOPSIS
 
     use Text::Format;
 
-    my $text = Text::Format->new ( 
+    my $text = Text::Format->new (
         {
             text           =>  [], # all
             columns        =>  72, # format, paragraphs, center
@@ -82,7 +78,7 @@ paragraph.
 
 =item B<format> @ARRAY || \@ARRAY || [<FILEHANDLE>] || NOTHING
 
-Allows one to do some advanced formatting of text into a paragraph, with
+Allows to do some advanced formatting of text into a paragraph, with
 indent for first line and body set separately.  Can specify total width
 of text, right fill with spaces or right align or justify (align to both
 margins), right margin and left margin, non-breaking space, two spaces
@@ -205,17 +201,19 @@ your array.  This is also called a tagged paragraph.
 
 =item B<noBreak> 0 || 1 || NOTHING
 
-Set whether you want to use the non-breaking space feature.
+Set whether you want to use the non-breaking space feature (see
+B<noBreakRegex> below).
 
 =item B<noBreakRegex> \%HASH || NOTHING
 
-Pass in a reference to your hash that would hold the regexes on which not
-to break.  Without any arguments, it returns the hash.
-eg.
+Pass in a reference to a hash that would hold the regexes on which not
+to break. In order for this to happen, it requires B<noBreak> to be set
+to B<true> - see above.  Without any arguments, it
+returns the hash. E.g:
 
     {'^Mrs?\.$' => '^\S+$','^\S+$' => '^(?:S|J)r\.$'}
 
-don't break names such as 
+don't break names such as
 Mr. Jones, Mrs. Jones, Jones Jr.
 
 The breaking algorithm is simple.  If there should not be a break at the
@@ -224,6 +222,8 @@ words on which breaking is allowed.  If no two such words are found then
 the end of sentence is broken anyhow.  If there is a single word on
 current line then no backtrack is done and the word is stuck on the end.
 This is so you can make a list of names for example.
+
+B<Note>: this feature requires B<noBreak> to be set to true.
 
 =item B<extraSpace> 0 || 1 || NOTHING
 
@@ -284,8 +284,8 @@ abbreviations.
 
 =head1 BUGS
 
-Line length can exceed the number of specified columns 
-if columns is set to a small number and long words plus leading whitespace 
+Line length can exceed the number of specified columns
+if columns is set to a small number and long words plus leading whitespace
 exceed the specified column length.  Actually I see this as a feature since it
 can be used to make up a nice word list.
 
@@ -325,12 +325,17 @@ Suggestion for a justify feature and original code for doing the
 justification.  I changed the code to take into account the extra space
 at end of sentence feature.
 
+B<Anne Wainwright>
+
+Inspired a documentation clarification about B<noBreak> required by
+B<noBreakRegex> , thanks to a report with a problem.
+
 =head1 TODO
 
 =cut
 
 use Carp;
-
+use strict;
 use vars qw($VERSION);
 
 $VERSION = '0.56';
@@ -873,7 +878,7 @@ sub noBreakRegex($;$)
     croak "Bad method call"
         unless ref $this;
     my $nobreak = shift;
-    
+
     $this->{'_nobreakregex'} = $nobreak
         if ref $nobreak eq 'HASH';
 
