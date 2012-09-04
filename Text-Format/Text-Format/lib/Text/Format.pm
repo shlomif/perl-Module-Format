@@ -78,7 +78,7 @@ paragraph.
 
 =item B<format> @ARRAY || \@ARRAY || [<FILEHANDLE>] || NOTHING
 
-Allows to do some advanced formatting of text into a paragraph, with
+Allows one to do some advanced formatting of text into a paragraph, with
 indent for first line and body set separately.  Can specify total width
 of text, right fill with spaces or right align or justify (align to both
 margins), right margin and left margin, non-breaking space, two spaces
