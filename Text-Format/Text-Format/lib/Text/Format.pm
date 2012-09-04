@@ -9,7 +9,7 @@ B<Text::Format> - Various subroutines to format text.
 
     use Text::Format;
 
-    my $text = Text::Format->new ( 
+    my $text = Text::Format->new (
         {
             text           =>  [], # all
             columns        =>  72, # format, paragraphs, center
@@ -211,7 +211,7 @@ eg.
 
     {'^Mrs?\.$' => '^\S+$','^\S+$' => '^(?:S|J)r\.$'}
 
-don't break names such as 
+don't break names such as
 Mr. Jones, Mrs. Jones, Jones Jr.
 
 The breaking algorithm is simple.  If there should not be a break at the
@@ -280,8 +280,8 @@ abbreviations.
 
 =head1 BUGS
 
-Line length can exceed the number of specified columns 
-if columns is set to a small number and long words plus leading whitespace 
+Line length can exceed the number of specified columns
+if columns is set to a small number and long words plus leading whitespace
 exceed the specified column length.  Actually I see this as a feature since it
 can be used to make up a nice word list.
 
@@ -869,7 +869,7 @@ sub noBreakRegex($;$)
     croak "Bad method call"
         unless ref $this;
     my $nobreak = shift;
-    
+
     $this->{'_nobreakregex'} = $nobreak
         if ref $nobreak eq 'HASH';
 
