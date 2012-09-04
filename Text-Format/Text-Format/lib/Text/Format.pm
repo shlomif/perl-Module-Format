@@ -201,13 +201,15 @@ your array.  This is also called a tagged paragraph.
 
 =item B<noBreak> 0 || 1 || NOTHING
 
-Set whether you want to use the non-breaking space feature.
+Set whether you want to use the non-breaking space feature (see
+B<noBreakRegex> below).
 
 =item B<noBreakRegex> \%HASH || NOTHING
 
-Pass in a reference to your hash that would hold the regexes on which not
-to break.  Without any arguments, it returns the hash.
-eg.
+Pass in a reference to a hash that would hold the regexes on which not
+to break. In order for this to happen, it requires B<noBreak> to be set
+to B<true> - see above.  Without any arguments, it
+returns the hash. E.g:
 
     {'^Mrs?\.$' => '^\S+$','^\S+$' => '^(?:S|J)r\.$'}
 
@@ -220,6 +222,8 @@ words on which breaking is allowed.  If no two such words are found then
 the end of sentence is broken anyhow.  If there is a single word on
 current line then no backtrack is done and the word is stuck on the end.
 This is so you can make a list of names for example.
+
+B<Note>: this feature requires B<noBreak> to be set to true.
 
 =item B<extraSpace> 0 || 1 || NOTHING
 
@@ -320,6 +324,11 @@ B<H. Merijn Brand>
 Suggestion for a justify feature and original code for doing the
 justification.  I changed the code to take into account the extra space
 at end of sentence feature.
+
+B<Anne Wainwright>
+
+Inspired a documentation clarification about B<noBreak> required by
+B<noBreakRegex> , thanks to a report with a problem.
 
 =head1 TODO
 
