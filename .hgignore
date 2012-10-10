@@ -10,6 +10,7 @@ Module-Format/Module-Format/Build
 Module-Format/Module-Format/Makefile.PL
 Module-Format/Module-Format/META.yml
 Module-Format/Module-Format/MYMETA.yml
+Module-Format/Module-Format/MYMETA.json
 Text-Format/Text-Format/blib
 Text-Format/Text-Format/_build
 Text-Format/Text-Format/Build
