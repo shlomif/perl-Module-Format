@@ -12,7 +12,7 @@ exit(0);
 
 =head1 NAME
 
-pelrmf -- A command line tool for converting Perl module identifiers to
+perlmf -- A command line tool for converting Perl module identifiers to
 certain formats.
 
 =head1 USAGE
