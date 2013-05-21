@@ -7,7 +7,7 @@ use IO::All;
 
 my ($version) =
     (map { m{\$VERSION *= *'([^']+)'} ? ($1) : () }
-    io->file('lib/XML/Grammar/Fiction.pm')->getlines()
+    io->file('lib/Module/Format.pm')->getlines()
     )
     ;
 
@@ -18,8 +18,8 @@ if (!defined ($version))
 
 my @cmd = (
     "hg", "tag", "-m",
-    "Tagging the XML-Grammar-Fiction release as $version",
-    "releases/XML-Grammar-Fiction/$version",
+    "Tagging the Module-Format release as $version",
+    "Module-Format-v$version",
 );
 
 print join(" ", map { /\s/ ? qq{"$_"} : $_ } @cmd), "\n";
