@@ -30,7 +30,7 @@ ok(1, "Test is OK.");
 
     # TEST
     is (
-        $trap->stdout(), 
+        $trap->stdout(),
         qq{perl(Data::Dump) perl(XML::Grammar::Fortune)\n},
         'as_rpm_colon works as expected.',
     );
@@ -47,7 +47,7 @@ ok(1, "Test is OK.");
 
     # TEST
     is (
-        $trap->stdout(), 
+        $trap->stdout(),
         qq{Data::Dump XML::Grammar::Fortune\n},
         'as_colon works as expected.',
     );
@@ -64,7 +64,7 @@ ok(1, "Test is OK.");
 
     # TEST
     is (
-        $trap->stdout(), 
+        $trap->stdout(),
         qq{libfoo-bar-baz-perl libquux-stanley-perl\n},
         'deb works as expected.',
     );
@@ -81,7 +81,7 @@ ok(1, "Test is OK.");
 
     # TEST
     is (
-        $trap->stdout(), 
+        $trap->stdout(),
         qq{perl(Data::Dump)\0perl(XML::Grammar::Fortune)},
         'as_rpm_colon -0 works as expected.',
     );
@@ -98,7 +98,7 @@ ok(1, "Test is OK.");
 
     # TEST
     is (
-        $trap->stdout(), 
+        $trap->stdout(),
         qq{perl(Data::Dump)\nperl(XML::Grammar::Fortune)\n},
         '-n works as expected.',
     );

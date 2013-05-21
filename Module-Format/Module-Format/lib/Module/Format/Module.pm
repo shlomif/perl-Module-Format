@@ -55,7 +55,7 @@ our $VERSION = '0.0.4';
         );
 
     my $module = Module::Format::Module->from_guess(
-        { 
+        {
             value => # All of the above...
         }
     );
@@ -103,7 +103,7 @@ sub _init
 
 =head2 my $module = Module::Format::Module->from_components({components => [@components]})
 
-Constructs a module from @components which are strings that indicate the 
+Constructs a module from @components which are strings that indicate the
 individual components of the module. For example:
 
     my $module = Module::Format::Module->from_components(
@@ -128,16 +128,16 @@ and the string value $string .
 
 Valid formats are:
 
-=over 4 
+=over 4
 
 =item * 'colon'
 
-Separated by a double colon, e.g: C<XML::RSS>, C<Data::Dumper>, 
+Separated by a double colon, e.g: C<XML::RSS>, C<Data::Dumper>,
 C<Catalyst::Plugin::Model::DBIx::Class>, etc.
 
 =item * 'dash'
 
-Separated by a double colon, e.g: C<XML-RSS>, C<Data-Dumper>, 
+Separated by a double colon, e.g: C<XML-RSS>, C<Data-Dumper>,
 C<Catalyst-Plugin-Model-DBIx-Class>, etc.
 
 =item * 'unix'
@@ -153,7 +153,7 @@ Like dash, only with C<'perl-'> prefixed: C<perl-XML-RSS>, C<perl-Data-Dumper>.
 =item * 'rpm_colon'
 
 Like colon only wrapped inside C<perl(...)> - useful for rpm provides for
-individual modules. E.g: C<perl(XML::RSS)>, 
+individual modules. E.g: C<perl(XML::RSS)>,
 C<perl(Catalyst::Plugin::Authentication)> .
 
 =item * 'debian'
@@ -216,9 +216,9 @@ my @formats_by_priority =
     {
         name => 'colon',
         regex => qr{\A$colon_re\z},
-        input => sub { 
+        input => sub {
             my ($class, $value) = @_;
-            return [split(/::/, $value, -1)]; 
+            return [split(/::/, $value, -1)];
         },
         format => sub {
             my ($self) = @_;
@@ -229,9 +229,9 @@ my @formats_by_priority =
     {
         name => 'dash',
         regex => qr{\A$dash_re\z},
-        input => sub { 
+        input => sub {
             my ($class, $value) = @_;
-            return [split(/-/, $value, -1)]; 
+            return [split(/-/, $value, -1)];
         },
         format => sub {
             my ($self) = @_;
@@ -311,7 +311,7 @@ sub from
 =head2 my $array_ref = $module->get_components_list()
 
 Returns the components list of the module as an array reference. For
-example for the module C<One::Two::Three> it would be 
+example for the module C<One::Two::Three> it would be
 C<["One", "Two", "Three"]>.
 
 =cut
@@ -357,7 +357,7 @@ sub clone
     my $self = shift;
 
     return ref($self)->from_components(
-        {components => $self->get_components_list() } 
+        {components => $self->get_components_list() }
     );
 }
 
@@ -410,7 +410,7 @@ sub from_guess
 
     # TODO : After the previous line the indentation in vim is reset to the
     # first column.
-    
+
     foreach my $format_record (@formats_by_priority)
     {
         if (my $regex = $format_record->{regex})
