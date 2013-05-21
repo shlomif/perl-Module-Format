@@ -11,6 +11,7 @@ MANIFEST.SKIP
 META.yml
 README
 t/00-load.t
+t/cpan-changes.t
 t/module-list.t
 t/module.t
 t/perlmf-app.t
