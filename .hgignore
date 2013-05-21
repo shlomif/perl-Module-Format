@@ -20,3 +20,7 @@ Text-Format/Text-Format/META.json
 Text-Format/Text-Format/META.yml
 Text-Format/Text-Format/MYMETA.json
 Text-Format/Text-Format/MYMETA.yml
+
+syntax: regexp
+
+^Module-Format/Module-Format/Module-Format-v\d+\.\d+.\d+(?:/|\.tar\.gz)
