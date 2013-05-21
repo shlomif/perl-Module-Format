@@ -4,6 +4,7 @@ Revision history for Module-Format
         - Add t/style-trailing-space.t to check for trailing space.
         - Get rid of trailing whitespace.
         - Convert this file to t/cpan-changes.t .
+        - Add script/bump-version-number.pl and script/tag-release.pl .
 
 0.0.4   2011-06-11
         - Small improvement to the script/perlmf POD.

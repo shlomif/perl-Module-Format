@@ -18,5 +18,7 @@ t/perlmf-app.t
 t/pod-coverage.t
 t/pod.t
 t/style-trailing-space.t
+script/bump-version-number.pl
 script/perlmf
+script/tag-release.pl
 META.json
