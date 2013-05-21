@@ -31,7 +31,7 @@ our $VERSION = '0.0.4';
 
     foreach my $name (@{$list->format_as('rpm_colon')})
     {
-        print "$name\n";    
+        print "$name\n";
     }
 
     my $list = Module::Format::ModuleList->sane_from_guesses(
@@ -135,8 +135,8 @@ sub format_as
 
 =head2 my $list_obj = Module::Format::ModuleList->sane_from_guesses({values => \@list_of_strings});
 
-Initialises a module list object from a list of strings by using 
-L<Module::Format::Module>'s from_guess on each string and while checking the 
+Initialises a module list object from a list of strings by using
+L<Module::Format::Module>'s from_guess on each string and while checking the
 guesses for sanity. See the synposis for an example.
 
 =cut
@@ -159,7 +159,7 @@ sub sane_from_guesses
         push @modules, $module;
     }
 
-    return $class->new({modules => \@modules});  
+    return $class->new({modules => \@modules});
 }
 
 =head1 AUTHOR

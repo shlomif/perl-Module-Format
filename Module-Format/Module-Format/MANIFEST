@@ -16,5 +16,6 @@ t/module.t
 t/perlmf-app.t
 t/pod-coverage.t
 t/pod.t
+t/style-trailing-space.t
 script/perlmf
 META.json

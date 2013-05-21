@@ -3,7 +3,7 @@ Module-Format
 Module-Format is a CPAN distribution to translate between the various formats
 that Perl 5 modules and distributions can appear in (e.g: "XML-RSS", "XML::RSS",
 "XML/RSS.pm", "perl(XML::RSS)", "perl-XML-RSS") and perform operations on
-a list of them. 
+a list of them.
 
 INSTALLATION
 

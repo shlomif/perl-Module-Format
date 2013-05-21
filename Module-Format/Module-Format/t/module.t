@@ -291,7 +291,7 @@ use Module::Format::Module;
 
 {
     my $module = Module::Format::Module->from_guess({value => "XML::RSS"});
-    
+
     # TEST
     ok ($module, "from_guess initialises a module.");
 
@@ -311,7 +311,7 @@ use Module::Format::Module;
             format_ref => \$chosen_format,
         }
     );
-    
+
     # TEST
     ok ($module, "from_guess initialises a module.");
 
@@ -334,7 +334,7 @@ use Module::Format::Module;
             format_ref => \$chosen_format,
         }
     );
-    
+
     # TEST
     ok ($module, "from_guess initialises a module.");
 
@@ -362,7 +362,7 @@ use Module::Format::Module;
             format_ref => \$chosen_format,
         }
     );
-    
+
     # TEST
     ok ($module, "from_guess initialises a module.");
 
@@ -390,7 +390,7 @@ use Module::Format::Module;
             format_ref => \$chosen_format,
         }
     );
-    
+
     # TEST
     ok ($module, "from_guess initialises a module.");
 
@@ -418,7 +418,7 @@ use Module::Format::Module;
             format_ref => \$chosen_format,
         }
     );
-    
+
     # TEST
     ok ($module, "from_guess initialises a module.");
 
