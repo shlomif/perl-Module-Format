@@ -10,11 +10,11 @@ Perl module names and distribution names are kept in.
 
 =head1 VERSION
 
-Version 0.0.4
+Version 0.0.5
 
 =cut
 
-our $VERSION = '0.0.4';
+our $VERSION = '0.0.5';
 
 =head1 SYNOPSIS
 
