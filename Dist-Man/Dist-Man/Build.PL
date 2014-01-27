@@ -8,7 +8,7 @@ use Test::Run::Builder;
 
 my $build = Test::Run::Builder->new(
     'module_name' => "Dist::Man",
-    'requires' => 
+    'requires' =>
     {
         'ExtUtils::Command' => 0,
         'File::Spec' => 0,
@@ -23,7 +23,7 @@ my $build = Test::Run::Builder->new(
         resources =>
         {
             # TODO : Change to the Mercurial/hg repos.
-            repository => "https://svn.berlios.de/svnroot/repos/web-cpan/Module-Starter-to-Dist-Man-temp/trunk/",
+            repository => "https://bitbucket.org/shlomif/web-cpan",
             homepage => "http://web-cpan.berlios.de/modules/Dist-Man/",
         },
         keywords =>
