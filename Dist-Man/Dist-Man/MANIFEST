@@ -33,3 +33,4 @@ t/module-starter.t
 t/pod-coverage.t
 t/pod.t
 t/test-dist.t
+META.json

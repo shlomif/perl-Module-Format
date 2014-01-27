@@ -498,8 +498,12 @@ sub MI_Makefile_PL_guts {
     my $author = "$self->{author} <$self->{email}>";
     $author =~ s/'/\'/g;
 
+    # To avoid making it a dependency:
+    my $my_mod = "Mod";
+    my $my_inst = "Inst";
+
     return <<"HERE";
-use inc::Module::Install;
+use inc::${my_mod}ule::${my_inst}all;
 
 name     '$self->{distro}';
 all_from '$main_pm_file';
