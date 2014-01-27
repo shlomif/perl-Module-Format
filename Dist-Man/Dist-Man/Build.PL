@@ -8,6 +8,10 @@ use Test::Run::Builder;
 
 my $build = Test::Run::Builder->new(
     'module_name' => "Dist::Man",
+    'configure_requires' =>
+    {
+        'Module::Build' => '0.36',
+    },
     'requires' =>
     {
         'ExtUtils::Command' => 0,
