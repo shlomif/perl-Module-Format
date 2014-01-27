@@ -3,7 +3,10 @@ Dist-Man/Dist-Man/_build
 Dist-Man/Dist-Man/Build
 Dist-Man/Dist-Man/Makefile.PL
 Dist-Man/Dist-Man/META.yml
+Dist-Man/Dist-Man/META.json
 Dist-Man/Dist-Man/MYMETA.yml
+Dist-Man/Dist-Man/MYMETA.json
+Dist-Man/Dist-Man/Dist-Man*
 Module-Format/Module-Format/blib
 Module-Format/Module-Format/_build
 Module-Format/Module-Format/Build
