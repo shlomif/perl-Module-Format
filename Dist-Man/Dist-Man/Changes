@@ -1,5 +1,8 @@
 Revision history for Perl extension Dist::Man
 
+0.0.6      Tue 28 Jan 15:12:49 IST 2014
+    * Fix the LICENSE header.
+
 0.0.5      Mon 27 Jan 12:26:24 IST 2014
     * CPANTS Kwalitee changes - LICENSE, prereq, etc.
 

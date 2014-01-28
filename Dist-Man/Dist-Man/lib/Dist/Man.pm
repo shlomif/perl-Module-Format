@@ -149,8 +149,6 @@ notified of progress on your bug as I make changes.
 
 =head1 LICENSE
 
-=head2 Module-Starter
-
 Copyright 2005-2009 Andy Lester, Ricardo Signes and C.J. Adams-Collier,
 All Rights Reserved.
 
