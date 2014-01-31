@@ -3,6 +3,8 @@ package Module::Format;
 use warnings;
 use strict;
 
+use 5.006;
+
 =head1 NAME
 
 Module::Format - a CPAN distribution to handle the various formats that
