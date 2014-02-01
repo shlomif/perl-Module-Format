@@ -289,6 +289,13 @@ if columns is set to a small number and long words plus leading whitespace
 exceed the specified column length.  Actually I see this as a feature since it
 can be used to make up a nice word list.
 
+=head1 LICENSE
+
+Copyright (c) 1998 Gabor Egressy.  All rights reserved.
+
+This program is free software; you can redistribute and/or
+modify it under the same terms as Perl itself.
+
 =head1 AUTHOR
 
 Gabor Egressy B<gabor@vmunix.com>
