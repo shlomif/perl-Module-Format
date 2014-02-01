@@ -349,7 +349,7 @@ use Carp;
 
 use vars qw($VERSION);
 
-$VERSION = '0.58';
+$VERSION = '0.59';
 
 # local abbreviations, you can add your own with abbrevs()
 my %abbrev = (
