@@ -5,6 +5,7 @@ Revision history for Perl extension Text::Format.
     - Add a LICENSE file (CPANTS).
     - Add a "=head1 LICENSE" section to the POD (CPANTS).
     - Minimum version of perl in META.yml (CPANTS).
+    - Add "use warnings;" (CPANTS).
 
 0.58 Tue  4 Sep 23:04:11 IDT 2012
     - Apply a patch to correct a minor grammatical error:
