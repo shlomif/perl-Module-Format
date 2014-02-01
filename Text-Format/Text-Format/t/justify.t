@@ -20,7 +20,7 @@ ok(1, "Loaded");
 # make test uses .../bin/perl
 # perl t/justify.t generates the <DATA> part
 
-my $text = 
+my $text =
         "gjyfg uergf au eg uyefg uayg uyger uge uvyger uvga erugf uevg ueyrgv ".
         "uaygerv uygaer uvygaervuy. aureyg aeurgv uayergv uegrv uyagr fuyg uyg".
         " ruvyg aeruvg uevrg auygvre ayergv uyaergv uyagre vuyagervuygervuyg a".
