@@ -23,6 +23,7 @@ Text-Format/Text-Format/META.json
 Text-Format/Text-Format/META.yml
 Text-Format/Text-Format/MYMETA.json
 Text-Format/Text-Format/MYMETA.yml
+Text-Format/Text-Format/Text-Format-*
 
 syntax: regexp
 
