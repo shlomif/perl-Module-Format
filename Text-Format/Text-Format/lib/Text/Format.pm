@@ -342,8 +342,11 @@ B<noBreakRegex> , thanks to a report with a problem.
 
 =cut
 
-use Carp;
 use strict;
+use warnings;
+
+use Carp;
+
 use vars qw($VERSION);
 
 $VERSION = '0.58';
