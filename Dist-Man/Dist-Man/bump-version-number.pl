@@ -6,6 +6,9 @@ use warnings;
 use File::Find::Object;
 use IO::All;
 
+my $version = shift(@ARGV)
+    or die "Must specify version as bump-version-number.pl 0.0.1";
+
 my $tree = File::Find::Object->new({}, 'lib/');
 
 while (my $r = $tree->next()) {
@@ -19,7 +22,7 @@ while (my $r = $tree->next()) {
         LINES_LOOP:
         foreach (@lines)
         {
-            if (s#(\$VERSION = ')\d+\.\d+\.\d+(')#$1 . "0.0.4" . $2#e)
+            if (s#(\$VERSION = ')\d+\.\d+\.\d+(')#$1 . $version . $2#e)
             {
                 last LINES_LOOP;
             }
