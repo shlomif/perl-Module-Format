@@ -155,7 +155,7 @@ All Rights Reserved.
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
-=head2 Dist-Man
+=head1 ADDITIONAL MODIFICATION TERMS
 
 Modified by Shlomi Fish, 2009 - all rights disclaimed - may be used under
 any of the present or future terms of Module-Starter.
