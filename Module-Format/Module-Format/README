@@ -23,18 +23,14 @@ perldoc command.
 
 You can also look for information at:
 
+    MetaCPAN
+        http://metacpan.org/release/Module-Format
+
     RT, CPAN's request tracker
         http://rt.cpan.org/NoAuth/Bugs.html?Dist=Module-Format
 
-    AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/Module-Format
-
     CPAN Ratings
         http://cpanratings.perl.org/d/Module-Format
-
-    Search CPAN
-        http://search.cpan.org/dist/Module-Format/
-
 
 COPYRIGHT AND LICENCE
 
