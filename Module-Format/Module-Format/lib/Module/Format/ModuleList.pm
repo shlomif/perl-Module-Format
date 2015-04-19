@@ -178,28 +178,24 @@ You can find documentation for this module with the perldoc command.
 
     perldoc Module::Format::ModuleList
 
-
 You can also look for information at:
 
 =over 4
+
+=item * MetaCPAN
+
+L<https://metacpan.org/release/Module-Format>
 
 =item * RT: CPAN's request tracker
 
 L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Module-Format>
 
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/Module-Format>
-
 =item * CPAN Ratings
 
 L<http://cpanratings.perl.org/d/Module-Format>
 
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/Module-Format/>
-
 =back
+
 
 
 =head1 ACKNOWLEDGEMENTS
