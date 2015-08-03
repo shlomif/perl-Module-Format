@@ -79,7 +79,7 @@ sub run
         'license=s'  => \$config{license},
         force        => \$config{force},
         verbose      => \$config{verbose},
-        version      => 
+        version      =>
             sub {
                 require Dist::Man;
                 print "pl-dist-man v$Dist::Man::VERSION\n";

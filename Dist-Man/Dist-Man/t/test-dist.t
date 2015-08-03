@@ -1239,7 +1239,7 @@ Shlomi Fish, L<http://www.shlomifish.org/>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright by Shlomi Fish, 2009. This file is available under the MIT/X11 
+Copyright by Shlomi Fish, 2009. This file is available under the MIT/X11
 License:
 
 L<http://www.opensource.org/licenses/mit-license.php>
