@@ -17,7 +17,7 @@ end
 ARGV.each do |fn_iter|
     fn = "" + fn_iter
     if (not File.file?(fn)) then
-        next 
+        next
     end
 
     orig_fn = "" + fn
