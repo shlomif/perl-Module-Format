@@ -254,7 +254,7 @@ under the same terms as Perl itself.
 =head2 Dist::Man::Template
 
 Modified by Shlomi Fish while disclaiming any explicit or implicit ownership.
-May be used under the present or future terms of 
+May be used under the present or future terms of
 L<Module::Starter::Template>.
 
 =cut

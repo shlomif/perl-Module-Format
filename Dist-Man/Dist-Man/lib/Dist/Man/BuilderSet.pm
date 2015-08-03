@@ -277,7 +277,7 @@ employers of the various contributors to the code.
 =head2 Dist::Man::BuilderSet
 
 Modified by Shlomi Fish while disclaiming any explicit or implicit ownership.
-May be used under the present or future terms of 
+May be used under the present or future terms of
 L<Module::Starter::BuilderSet>.
 
 =cut
