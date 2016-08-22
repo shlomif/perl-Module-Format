@@ -1,5 +1,10 @@
 Revision history for Perl extension Text::Format.
 
+0.60    2016-08-22
+    - Apply a patch to correct a spelling error:
+        - https://rt.cpan.org/Ticket/Display.html?id=117100
+        - Thanks to Salvatore Bonaccorso, Debian Perl Group.
+
 0.59    2014-02-01
     - Add the missing README to the distribution (CPANTS).
     - Add a LICENSE file (CPANTS).
