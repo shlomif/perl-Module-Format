@@ -1,5 +1,9 @@
 Revision history for Module-Format
 
+0.0.8   2018-05-02
+        - Convert to dist zilla
+        - Move repo to GitHub .
+
 0.0.7   2015-04-19
         - Update the links (to point to MetaCPAN/etc.).
 

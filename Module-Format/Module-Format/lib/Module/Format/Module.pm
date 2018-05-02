@@ -7,14 +7,6 @@ use strict;
 
 Module::Format::Module - encapsulates a single Perl module.
 
-=head1 VERSION
-
-Version 0.0.7
-
-=cut
-
-our $VERSION = '0.0.7';
-
 =head1 SYNOPSIS
 
     use Module::Format::Module;
@@ -92,9 +84,9 @@ sub _components
 
 sub _init
 {
-    my ($self, $args) = @_;
+    my ( $self, $args ) = @_;
 
-    $self->_components([ @{ $args->{_components} } ]);
+    $self->_components( [ @{ $args->{_components} } ] );
 
     return;
 }
@@ -116,9 +108,9 @@ individual components of the module. For example:
 
 sub from_components
 {
-    my ($class, $args) = @_;
+    my ( $class, $args ) = @_;
 
-    return $class->_new({_components => [@{$args->{components}}]});
+    return $class->_new( { _components => [ @{ $args->{components} } ] } );
 }
 
 =head2 my $module = Module::Format::Module->from({format => $format, value => $string});
@@ -165,26 +157,23 @@ C<libcatalyst-plugin-authentication-perl> . Output only.
 
 =cut
 
-my $dash_re = qr{(?:\w+-)*\w+};
+my $dash_re  = qr{(?:\w+-)*\w+};
 my $colon_re = qr{(?:\w+::)*\w+};
 
-my @formats_by_priority =
-(
+my @formats_by_priority = (
     {
-        name => 'rpm_dash',
+        name  => 'rpm_dash',
         regex => qr{\Aperl-$dash_re\z},
-        input =>
-        sub {
-            my ($class, $value) = @_;
+        input => sub {
+            my ( $class, $value ) = @_;
 
-            if ($value !~ s{\Aperl-}{})
+            if ( $value !~ s{\Aperl-}{} )
             {
                 die "rpm_dash value does not start with the 'perl-' prefix.";
             }
 
             return $class->_calc_components_from_string(
-                {format => 'dash', value => $value}
-            );
+                { format => 'dash', value => $value } );
         },
         format => sub {
             my ($self) = @_;
@@ -193,93 +182,92 @@ my @formats_by_priority =
         },
     },
     {
-        name => 'rpm_colon',
+        name  => 'rpm_colon',
         regex => qr{\Aperl\($colon_re\)\z},
         input => sub {
-            my ($class, $value) = @_;
+            my ( $class, $value ) = @_;
 
-            if ($value !~ m{\Aperl\(((?:\w+::)*\w+)\)\z})
+            if ( $value !~ m{\Aperl\(((?:\w+::)*\w+)\)\z} )
             {
                 die "Improper value for rpm_colon";
             }
 
             return $class->_calc_components_from_string(
-                {format => 'colon', value => $1}
-            );
+                { format => 'colon', value => $1 } );
         },
         format => sub {
-             my ($self) = @_;
+            my ($self) = @_;
 
-             return 'perl(' . $self->format_as('colon') . ')';
+            return 'perl(' . $self->format_as('colon') . ')';
         },
     },
     {
-        name => 'colon',
+        name  => 'colon',
         regex => qr{\A$colon_re\z},
         input => sub {
-            my ($class, $value) = @_;
-            return [split(/::/, $value, -1)];
+            my ( $class, $value ) = @_;
+            return [ split( /::/, $value, -1 ) ];
         },
         format => sub {
             my ($self) = @_;
 
-            return join('::', @{$self->_components()});
+            return join( '::', @{ $self->_components() } );
         },
     },
     {
-        name => 'dash',
+        name  => 'dash',
         regex => qr{\A$dash_re\z},
         input => sub {
-            my ($class, $value) = @_;
-            return [split(/-/, $value, -1)];
+            my ( $class, $value ) = @_;
+            return [ split( /-/, $value, -1 ) ];
         },
         format => sub {
             my ($self) = @_;
 
-            return join('-', @{$self->_components()});
+            return join( '-', @{ $self->_components() } );
         },
     },
     {
-        name => 'unix',
+        name  => 'unix',
         regex => qr{\A(?:\w+/)*\w+\.pm\z},
         input => sub {
-            my ($class, $value) = @_;
+            my ( $class, $value ) = @_;
 
-            if ($value !~ s{\.pm\z}{})
+            if ( $value !~ s{\.pm\z}{} )
             {
                 die "Cannot find a .pm suffix in the 'unix' format.";
             }
 
-            return [split(m{/}, $value, -1)];
+            return [ split( m{/}, $value, -1 ) ];
         },
         format => sub {
             my ($self) = @_;
 
-            return join('/', @{$self->_components()}) . '.pm';
+            return join( '/', @{ $self->_components() } ) . '.pm';
         },
     },
     {
-        name => 'debian',
+        name   => 'debian',
         format => sub {
             my ($self) = @_;
 
-            return 'lib' . lc($self->format_as('dash')) . '-perl';
+            return 'lib' . lc( $self->format_as('dash') ) . '-perl';
         },
     },
 );
 
-my %formats = (map { $_->{name} => $_ } @formats_by_priority);
+my %formats = ( map { $_->{name} => $_ } @formats_by_priority );
 
 sub _calc_components_from_string
 {
-    my ($class, $args) = @_;
+    my ( $class, $args ) = @_;
 
     my $format = $args->{format};
-    my $value = $args->{value};
+    my $value  = $args->{value};
 
-    if (exists($formats{$format}))
+    if ( exists( $formats{$format} ) )
     {
-        if (my $handler = $formats{$format}->{'input'})
+        if ( my $handler = $formats{$format}->{'input'} )
         {
             return $class->$handler($value);
         }
@@ -296,10 +284,10 @@ sub _calc_components_from_string
 
 sub from
 {
-    my ($class, $args) = @_;
+    my ( $class, $args ) = @_;
 
     my $format = $args->{format};
-    my $value = $args->{value};
+    my $value  = $args->{value};
 
     return $class->_new(
         {
@@ -320,7 +308,7 @@ sub get_components_list
 {
     my $self = shift;
 
-    return [ @{$self->_components()} ];
+    return [ @{ $self->_components() } ];
 }
 
 =head2 $module->format_as($format)
@@ -331,9 +319,9 @@ Format the module in the given format. See from() for a list.
 
 sub format_as
 {
-    my ($self, $format) = @_;
+    my ( $self, $format ) = @_;
 
-    if (exists($formats{$format}))
+    if ( exists( $formats{$format} ) )
     {
         my $handler = $formats{$format}->{'format'};
         return $self->$handler();
@@ -356,9 +344,9 @@ sub clone
 {
     my $self = shift;
 
-    return ref($self)->from_components(
-        {components => $self->get_components_list() }
-    );
+    return
+        ref($self)
+        ->from_components( { components => $self->get_components_list() } );
 }
 
 =head2 my $bool = $module->is_sane();
@@ -370,11 +358,11 @@ any funny character (only alphanumeric characters and underscore.).
 
 sub _all
 {
-    my ($cb, $l) = @_;
+    my ( $cb, $l ) = @_;
 
     foreach (@$l)
     {
-        if (not $cb->($_))
+        if ( not $cb->($_) )
         {
             return;
         }
@@ -387,7 +375,7 @@ sub is_sane
 {
     my $self = shift;
 
-    return _all( sub { m{\A\w+\z}; }, $self->_components());
+    return _all( sub { m{\A\w+\z}; }, $self->_components() );
 }
 
 =head2 my $module = Module::Format::Module->from_guess({ value => $string});
@@ -401,27 +389,28 @@ the format that was decided upon.
 
 sub from_guess
 {
-    my ($class, $args) = @_;
+    my ( $class, $args ) = @_;
 
     my $dummy_format_string;
 
     my $string = $args->{value};
-    my $out_format_ref = ($args->{format_ref} || (\$dummy_format_string));
+    my $out_format_ref = ( $args->{format_ref} || ( \$dummy_format_string ) );
 
     # TODO : After the previous line the indentation in vim is reset to the
     # first column.
 
     foreach my $format_record (@formats_by_priority)
     {
-        if (my $regex = $format_record->{regex})
+        if ( my $regex = $format_record->{regex} )
         {
-            if ($string =~ $regex)
+            if ( $string =~ $regex )
             {
                 my $format_id = $format_record->{name};
 
                 ${$out_format_ref} = $format_id;
 
-                return $class->from({value => $string, format => $format_id,});
+                return $class->from(
+                    { value => $string, format => $format_id, } );
             }
         }
     }
@@ -500,4 +489,4 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 =cut
 
-1; # End of Module::Format::Module
+1;    # End of Module::Format::Module

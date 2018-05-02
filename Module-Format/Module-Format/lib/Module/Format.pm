@@ -10,14 +10,6 @@ use 5.006;
 Module::Format - a CPAN distribution to handle the various formats that
 Perl module names and distribution names are kept in.
 
-=head1 VERSION
-
-Version 0.0.7
-
-=cut
-
-our $VERSION = '0.0.7';
-
 =head1 SYNOPSIS
 
 Nothing here yet. See L<Module::Format::Module> .
@@ -91,4 +83,4 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 =cut
 
-1; # End of Module::Format
+1;    # End of Module::Format

@@ -7,14 +7,6 @@ use strict;
 
 Module::Format::ModuleList - an ordered list of L<Module::Format::Module>.
 
-=head1 VERSION
-
-Version 0.0.7
-
-=cut
-
-our $VERSION = '0.0.7';
-
 =head1 SYNOPSIS
 
     use Module::Format::ModuleList;
@@ -70,7 +62,8 @@ sub _modules
 {
     my $self = shift;
 
-    if (@_) {
+    if (@_)
+    {
         $self->{_modules} = shift;
     }
 
@@ -79,25 +72,25 @@ sub _modules
 
 sub _add_module
 {
-    my ($self, $module) = @_;
+    my ( $self, $module ) = @_;
 
-    if (not $module->isa('Module::Format::Module'))
+    if ( not $module->isa('Module::Format::Module') )
     {
         die "Module is " . ref($module) . " instead of Module::Format::Module.";
     }
 
-    push @{$self->_modules()}, $module;
+    push @{ $self->_modules() }, $module;
 
     return;
 }
 
 sub _init
 {
-    my ($self, $args) = @_;
+    my ( $self, $args ) = @_;
 
-    $self->_modules([]);
+    $self->_modules( [] );
 
-    foreach my $module (@{$args->{modules}})
+    foreach my $module ( @{ $args->{modules} } )
     {
         $self->_add_module($module);
     }
@@ -116,7 +109,7 @@ sub get_modules_list_copy
 {
     my ($self) = @_;
 
-    return [ @{$self->_modules()} ];
+    return [ @{ $self->_modules() } ];
 }
 
 =head2 my $array_ref_of_strings = $list->format_as($format)
@@ -128,9 +121,9 @@ L<Module::Format::Module> for the available formats.
 
 sub format_as
 {
-    my ($self, $format) = @_;
+    my ( $self, $format ) = @_;
 
-    return [map { $_->format_as($format) } @{$self->_modules()}];
+    return [ map { $_->format_as($format) } @{ $self->_modules() } ];
 }
 
 =head2 my $list_obj = Module::Format::ModuleList->sane_from_guesses({values => \@list_of_strings});
@@ -143,15 +136,15 @@ guesses for sanity. See the synposis for an example.
 
 sub sane_from_guesses
 {
-    my ($class, $args) = @_;
+    my ( $class, $args ) = @_;
 
     my @modules;
 
-    foreach my $string (@{$args->{'values'}})
+    foreach my $string ( @{ $args->{'values'} } )
     {
-        my $module = Module::Format::Module->from_guess({value => $string});
+        my $module = Module::Format::Module->from_guess( { value => $string } );
 
-        if (! $module->is_sane())
+        if ( !$module->is_sane() )
         {
             die "Value '$string' does not evaluate as a sane module.";
         }
@@ -159,7 +152,7 @@ sub sane_from_guesses
         push @modules, $module;
     }
 
-    return $class->new({modules => \@modules});
+    return $class->new( { modules => \@modules } );
 }
 
 =head1 AUTHOR
@@ -232,4 +225,4 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 =cut
 
-1; # End of Module::Format::ModuleList
+1;    # End of Module::Format::ModuleList

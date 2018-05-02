@@ -3,7 +3,6 @@ package Module::Format::PerlMF_App;
 use strict;
 use warnings;
 
-
 use Getopt::Long qw(GetOptionsFromArray);
 use Pod::Usage;
 
@@ -12,14 +11,6 @@ use Module::Format::ModuleList;
 =head1 NAME
 
 Module::Format::PerlMF_App - implements the perlmf command-line application.
-
-=head1 VERSION
-
-Version 0.0.7
-
-=cut
-
-our $VERSION = '0.0.7';
 
 =head1 SYNOPSIS
 
@@ -50,19 +41,19 @@ sub _argv
 {
     my $self = shift;
 
-    if (@_) {
+    if (@_)
+    {
         $self->{_argv} = shift;
     }
 
     return $self->{_argv};
 }
 
-
 sub _init
 {
-    my ($self, $args) = @_;
+    my ( $self, $args ) = @_;
 
-    $self->_argv([ @{$args->{argv}} ]);
+    $self->_argv( [ @{ $args->{argv} } ] );
 
     return;
 }
@@ -73,24 +64,23 @@ Actually run the command line application.
 
 =cut
 
-my %ops_to_formats =
-(
+my %ops_to_formats = (
     'as_rpm_colon' => 'rpm_colon',
-    'rpm_colon' => 'rpm_colon',
-    'as_rpm_c' => 'rpm_colon',
-    'rpm_c' => 'rpm_colon',
-    'as_rpm_dash' => 'rpm_dash',
-    'rpm_dash' => 'rpm_dash',
-    'as_rpm_d' => 'rpm_dash',
-    'rpm_d' => 'rpm_dash',
-    'dash' => 'dash',
-    'as_dash' => 'dash',
-    'colon' => 'colon',
-    'as_colon' => 'colon',
-    'deb' => 'debian',
-    'as_deb' => 'debian',
-    'debian' => 'debian',
-    'as_debian' => 'debian',
+    'rpm_colon'    => 'rpm_colon',
+    'as_rpm_c'     => 'rpm_colon',
+    'rpm_c'        => 'rpm_colon',
+    'as_rpm_dash'  => 'rpm_dash',
+    'rpm_dash'     => 'rpm_dash',
+    'as_rpm_d'     => 'rpm_dash',
+    'rpm_d'        => 'rpm_dash',
+    'dash'         => 'dash',
+    'as_dash'      => 'dash',
+    'colon'        => 'colon',
+    'as_colon'     => 'colon',
+    'deb'          => 'debian',
+    'as_deb'       => 'debian',
+    'debian'       => 'debian',
+    'as_debian'    => 'debian',
 );
 
 sub run
@@ -101,39 +91,43 @@ sub run
 
     my $op = shift(@$argv);
 
-    if (!defined($op))
+    if ( !defined($op) )
     {
         die "You did not specify any arguments - see --help";
     }
 
-    if (($op eq "-h") || ($op eq "--help"))
+    if ( ( $op eq "-h" ) || ( $op eq "--help" ) )
     {
         pod2usage(1);
     }
-    elsif ($op eq "--man")
+    elsif ( $op eq "--man" )
     {
-        pod2usage(-verbose => 2);
+        pod2usage( -verbose => 2 );
     }
 
-    if (! exists( $ops_to_formats{$op} ))
+    if ( !exists( $ops_to_formats{$op} ) )
     {
         die "Unknown op '$op'.";
     }
 
     my $format = $ops_to_formats{$op};
 
-    my $delim = ' ';
+    my $delim  = ' ';
     my $suffix = "\n";
 
     my $help = 0;
-    my $man = 0;
-    if (! (my $ret = GetOptionsFromArray(
-        $argv,
-        '0!' => sub { $delim = "\0"; $suffix = q{}; },
-        'n!' => sub { $delim = "\n"; $suffix = "\n"; },
-        'help|h' => \$help,
-        man => \$man,
-    )))
+    my $man  = 0;
+    if (
+        !(
+            my $ret = GetOptionsFromArray(
+                $argv,
+                '0!' => sub { $delim = "\0"; $suffix = q{}; },
+                'n!' => sub { $delim = "\n"; $suffix = "\n"; },
+                'help|h' => \$help,
+                man      => \$man,
+            )
+        )
+        )
     {
         die "GetOptions failed!";
     }
@@ -145,7 +139,7 @@ sub run
 
     if ($man)
     {
-        pod2usage(-verbose => 2);
+        pod2usage( -verbose => 2 );
     }
 
     my @strings = @$argv;
@@ -156,7 +150,7 @@ sub run
         }
     );
 
-    print join($delim, @{$module_list_obj->format_as($format)}), $suffix;
+    print join( $delim, @{ $module_list_obj->format_as($format) } ), $suffix;
 
     return;
 }
@@ -231,4 +225,4 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 =cut
 
-1; # End of Module::Format::PerlMF_App
+1;    # End of Module::Format::PerlMF_App
