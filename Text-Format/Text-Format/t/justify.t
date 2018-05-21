@@ -30,8 +30,8 @@ my $text =
         "gr uagr reg yeg ueg";
 
 my $t = Text::Format->new ({
-    columns	=> 40,
-    firstIndent	=> 0
+    columns => 40,
+    firstIndent => 0
     });
 
 my $test = 2;
@@ -97,9 +97,9 @@ sub fmt_text
 
     # $verbose &&
     # print STDERR "# Test $tst: ",
-    #     $j ? "JUSTIFY"    : "justify",	", ",
-    #     $f ? "FILL"       : "fill",		", ",
-    #     $e ? "EXTRASPACE" : "extraspace",	"\n";
+    #     $j ? "JUSTIFY"    : "justify",    ", ",
+    #     $f ? "FILL"       : "fill",       ", ",
+    #     $e ? "EXTRASPACE" : "extraspace", "\n";
 
     $t->config ({ justify => $j, extraSpace => $e, rightFill => $f });
     my @lines = split ("\n", $t->format ($text));
@@ -116,8 +116,8 @@ sub fmt_natio
 
     # $verbose &&
     # print STDERR "# Test $tst: ",
-    # $j ? "JUSTIFY" : "justify",	", ",
-    # $f ? "FILL"    : "fill",	"\n";
+    # $j ? "JUSTIFY" : "justify",   ", ",
+    # $f ? "FILL"    : "fill",  "\n";
     $t->config ({ columns => $c, justify => $j, rightFill => $f });
     my @lines = split ("\n", $t->format (join (", ", @nat)));
     # $verbose &&
