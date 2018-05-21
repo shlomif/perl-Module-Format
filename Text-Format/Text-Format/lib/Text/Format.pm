@@ -368,93 +368,114 @@ sub format($@)
     my @wrap = @_
         if @_ > 0;
 
-    @wrap = @{$_[0]}
+    @wrap = @{ $_[0] }
         if ref $_[0] eq 'ARRAY';
-    @wrap =  @{$this->{'_text'}}
+    @wrap = @{ $this->{'_text'} }
         if @wrap < 1;
 
     my $findent = ' ' x $this->{'_findent'};
     my $bindent = ' ' x $this->{'_bindent'};
 
-    my @words = split /\s+/,join ' ',@wrap;
+    my @words = split /\s+/, join ' ', @wrap;
     shift @words
-        unless defined($words[0]) && $words[0] ne '';
-#if $words[0] eq '';
+        unless defined( $words[0] ) && $words[0] ne '';
+
+    #if $words[0] eq '';
 
     @wrap = ();
-    my ($line,$width,$abbrev);
+    my ( $line, $width, $abbrev );
     $abbrev = 0;
-    $width = $this->{'_cols'} - $this->{'_findent'}
-        - $this->{'_lmargin'} - $this->{'_rmargin'};
-    $line = shift @words;
+    $width =
+        $this->{'_cols'} -
+        $this->{'_findent'} -
+        $this->{'_lmargin'} -
+        $this->{'_rmargin'};
+    $line   = shift @words;
     $abbrev = $this->__is_abbrev($line)
         if defined $line;
-    while (defined ($_ = shift @words)) {
-        if(length($_) + length($line) < $width - 1
-                || ($line !~ /[.?!]['"]?$/ || $abbrev)
-                && length($_) + length($line) < $width) {
+    while ( defined( $_ = shift @words ) )
+    {
+
+        if ( length($_) + length($line) < $width - 1
+            || ( $line !~ /[.?!]['"]?$/ || $abbrev )
+            && length($_) + length($line) < $width )
+        {
             $line .= ' '
-                if $line =~ /[.?!]['"]?$/ && ! $abbrev;
+                if $line =~ /[.?!]['"]?$/ && !$abbrev;
             $line .= ' ' . $_;
         }
-        else {
+        else
+        {
             last;
         }
         $abbrev = $this->__is_abbrev($_);
     }
-    ($line,$_) = $this->__do_break($line,$_)
+    ( $line, $_ ) = $this->__do_break( $line, $_ )
         if $this->{'_nobreak'} && defined $line;
-    push @wrap,$this->__make_line($line,$findent,$width,defined $_)
+    push @wrap, $this->__make_line( $line, $findent, $width, defined $_ )
         if defined $line;
     $line = $_;
-    $width = $this->{'_cols'} - $this->{'_bindent'}
-        - $this->{'_lmargin'} - $this->{'_rmargin'};
+    $width =
+        $this->{'_cols'} -
+        $this->{'_bindent'} -
+        $this->{'_lmargin'} -
+        $this->{'_rmargin'};
     $abbrev = 0;
     $abbrev = $this->__is_abbrev($line)
         if defined $line;
-    while (defined ($_ = shift @words)) {
-        if(length($_) + length($line) < $width - 1
-                || ($line !~ /[.?!]['"]?$/ || $abbrev)
-                && length($_) + length($line) < $width) {
+    while ( defined( $_ = shift @words ) )
+    {
+
+        if ( length($_) + length($line) < $width - 1
+            || ( $line !~ /[.?!]['"]?$/ || $abbrev )
+            && length($_) + length($line) < $width )
+        {
             $line .= ' '
-                if $line =~ /[.?!]['"]?$/ && ! $abbrev;
+                if $line =~ /[.?!]['"]?$/ && !$abbrev;
             $line .= ' ' . $_;
         }
-        else {
-            ($line,$_) = $this->__do_break($line,$_)
+        else
+        {
+            ( $line, $_ ) = $this->__do_break( $line, $_ )
                 if $this->{'_nobreak'};
-            push @wrap,$this->__make_line($line,$bindent,$width,defined $_)
+            push @wrap,
+                $this->__make_line( $line, $bindent, $width, defined $_ )
                 if defined $line;
             $line = $_;
         }
         $abbrev = $this->__is_abbrev($_)
             if defined $_;
     }
-    push @wrap,$this->__make_line($line,$bindent,$width,0)
+    push @wrap, $this->__make_line( $line, $bindent, $width, 0 )
         if defined $line;
 
-    if($this->{'_hindent'} && @wrap > 0) {
-        my $caller = (caller 1)[3];
+    if ( $this->{'_hindent'} && @wrap > 0 )
+    {
+        my $caller = ( caller 1 )[3];
         $caller = ''
             unless defined $caller;
         $this->{'_hindcurr'} = $this->{'_hindtext'}->[0]
             if defined $this->{'_hindtext'}->[0]
-                && length($this->{'_hindcurr'}) < 1
-                && $caller ne 'Text::Format::paragraphs';
+            && length( $this->{'_hindcurr'} ) < 1
+            && $caller ne 'Text::Format::paragraphs';
         my ($fchar) = $wrap[0] =~ /(\S)/;
-        my $white = index $wrap[0],$fchar;
-        if($white  - $this->{'_lmargin'} - 1 > length($this->{'_hindcurr'})) {
-            $white = length($this->{'_hindcurr'}) + $this->{'_lmargin'};
+        my $white = index $wrap[0], $fchar;
+        if ( $white - $this->{'_lmargin'} - 1 > length( $this->{'_hindcurr'} ) )
+        {
+            $white = length( $this->{'_hindcurr'} ) + $this->{'_lmargin'};
             $wrap[0] =~
                 s/^ {$white}/' ' x $this->{'_lmargin'} . $this->{'_hindcurr'}/e;
         }
-        else {
-            unshift @wrap,' ' x $this->{'_lmargin'} . $this->{'_hindcurr'} . "\n";
+        else
+        {
+            unshift @wrap,
+                ' ' x $this->{'_lmargin'} . $this->{'_hindcurr'} . "\n";
         }
     }
 
-    wantarray ? @wrap
-              : join '', @wrap;
+    wantarray
+        ? @wrap
+        : join '', @wrap;
 }
 
 # format lines in text into paragraphs with each element of @wrap a
@@ -467,39 +488,44 @@ sub paragraphs($@)
     my @wrap = @_
         if @_ > 0;
 
-    @wrap = @{$_[0]}
+    @wrap = @{ $_[0] }
         if ref $_[0] eq 'ARRAY';
-    @wrap =  @{$this->{'_text'}}
+    @wrap = @{ $this->{'_text'} }
         if @wrap < 1;
 
-    my (@ret,$end,$cnt,$line);
+    my ( @ret, $end, $cnt, $line );
 
     # if indents are same, use newline between paragraphs
-    if($this->{'_findent'} == $this->{'_bindent'} ||
-            $this->{'_hindent'}) {
+    if (   $this->{'_findent'} == $this->{'_bindent'}
+        || $this->{'_hindent'} )
+    {
         $end = "\n";
     }
-    else {
+    else
+    {
         $end = '';
     }
 
     $cnt = 0;
-    for (@wrap) {
+    for (@wrap)
+    {
         $this->{'_hindcurr'} = $this->{'_hindtext'}->[$cnt]
             if $this->{'_hindent'};
         $this->{'_hindcurr'} = ''
             unless defined $this->{'_hindcurr'};
         $line = $this->format($_);
-        push @ret,$line . $end
+        push @ret, $line . $end
             if defined $line && length $line > 0;
         ++$cnt;
     }
     chop $ret[$#ret]
-        if defined($ret[$#ret]) && $ret[$#ret] =~ /\n\n$/;
-#if $ret[$#ret] =~ /\n\n$/;
+        if defined( $ret[$#ret] ) && $ret[$#ret] =~ /\n\n$/;
 
-    wantarray ? @ret
-              : join '',@ret;
+    #if $ret[$#ret] =~ /\n\n$/;
+
+    wantarray
+        ? @ret
+        : join '', @ret;
 }
 
 # center text using spaces on left side to pad it out
@@ -511,24 +537,28 @@ sub center($@)
         unless ref $this;
     my @center = @_
         if @_ > 0;
-    @center =  @{$this->{'_text'}}
+    @center = @{ $this->{'_text'} }
         if @center < 1;
     my ($tabs);
     my $width = $this->{'_cols'} - $this->{'_lmargin'} - $this->{'_rmargin'};
 
-    for (@center) {
+    for (@center)
+    {
         s/(?:^\s+|\s+$)|\n//g;
-        $tabs = tr/\t//; # count tabs
-        substr($_,0,0) = ' ' x int(($width - length($_)
-                - $tabs * $this->{'_tabs'} + $tabs) / 2)
+        $tabs = tr/\t//;    # count tabs
+        substr( $_, 0, 0 ) =
+            ' ' x
+            int(
+            ( $width - length($_) - $tabs * $this->{'_tabs'} + $tabs ) / 2 )
             if length > 0;
-        substr($_,0,0) = ' ' x $this->{'_lmargin'}
+        substr( $_, 0, 0 ) = ' ' x $this->{'_lmargin'}
             if length > 0;
-        substr($_,length) = "\n";
+        substr( $_, length ) = "\n";
     }
 
-    wantarray ? @center
-              : join '',@center;
+    wantarray
+        ? @center
+        : join '', @center;
 }
 
 # expand tabs to spaces
@@ -540,15 +570,17 @@ sub expand($@)
         unless ref $this;
     my @lines = @_
         if @_ > 0;
-    @lines =  @{$this->{'_text'}}
+    @lines = @{ $this->{'_text'} }
         if @lines < 1;
 
-    for (@lines) {
+    for (@lines)
+    {
         s/\t/' ' x $this->{'_tabs'}/eg;
     }
 
-    wantarray ? @lines
-              : $lines[0];
+    wantarray
+        ? @lines
+        : $lines[0];
 }
 
 # turn tabstop number of spaces into tabs
@@ -560,12 +592,14 @@ sub unexpand($@)
         unless ref $this;
     my @lines = $this->expand(@_);
 
-    for (@lines) {
+    for (@lines)
+    {
         s/ {$this->{'_tabs'}}/\t/g;
     }
 
-    wantarray ? @lines
-              : $lines[0];
+    wantarray
+        ? @lines
+        : $lines[0];
 }
 
 # return a reference to the object, call as $text = Text::Format->new()
@@ -574,40 +608,44 @@ sub new($@)
 {
     my $this = shift;
     my $ref;
-    if(ref $_[0] eq 'HASH') {
+    if ( ref $_[0] eq 'HASH' )
+    {
         $ref = shift;
     }
-    elsif(scalar(@_) % 2 == 0) {
+    elsif ( scalar(@_) % 2 == 0 )
+    {
         my %ref = @_;
         $ref = \%ref;
     }
-    else {
+    else
+    {
         $ref = '';
     }
     my %clone = %{$this}
         if ref $this;
 
     my $conf = {
-        _cols          =>  72,
-        _tabs          =>   8,
-        _findent       =>   4,
-        _bindent       =>   0,
-        _fill          =>   0,
-        _align         =>   0,
-        _justify       =>   0,
-        _lmargin       =>   0,
-        _rmargin       =>   0,
-        _space         =>   0,
-        _abbrs         =>  {},
-        _text          =>  [],
-        _hindent       =>   0,
-        _hindtext      =>  [],
-        _hindcurr      =>  '',
-        _nobreak       =>   0,
-        _nobreakregex  =>  {},
+        _cols         => 72,
+        _tabs         => 8,
+        _findent      => 4,
+        _bindent      => 0,
+        _fill         => 0,
+        _align        => 0,
+        _justify      => 0,
+        _lmargin      => 0,
+        _rmargin      => 0,
+        _space        => 0,
+        _abbrs        => {},
+        _text         => [],
+        _hindent      => 0,
+        _hindtext     => [],
+        _hindcurr     => '',
+        _nobreak      => 0,
+        _nobreakregex => {},
     };
 
-    if(ref $ref eq 'HASH') {
+    if ( ref $ref eq 'HASH' )
+    {
         $conf->{'_cols'} = abs int $ref->{'columns'}
             if defined $ref->{'columns'};
         $conf->{'_tabs'} = abs int $ref->{'tabstop'}
@@ -630,24 +668,25 @@ sub new($@)
             if defined $ref->{'extraSpace'};
         $conf->{'_abbrs'} = $ref->{'abbrevs'}
             if defined $ref->{'abbrevs'}
-                && ref $ref->{'abbrevs'} eq 'HASH';
+            && ref $ref->{'abbrevs'} eq 'HASH';
         $conf->{'_text'} = $ref->{'text'}
             if defined $ref->{'text'}
-                && ref $ref->{'text'} eq 'ARRAY';
+            && ref $ref->{'text'} eq 'ARRAY';
         $conf->{'_hindent'} = abs int $ref->{'hangingIndent'}
             if defined $ref->{'hangingIndent'};
         $conf->{'_hindtext'} = $ref->{'hangingText'}
             if defined $ref->{'hangingText'}
-                && ref $ref->{'hangingText'} eq 'ARRAY';
-        $conf->{'_nobreak'} = abs int$ref->{'noBreak'}
+            && ref $ref->{'hangingText'} eq 'ARRAY';
+        $conf->{'_nobreak'} = abs int $ref->{'noBreak'}
             if defined $ref->{'noBreak'};
         $conf->{'_nobreakregex'} = $ref->{'noBreakRegex'}
             if defined $ref->{'noBreakRegex'}
-                && ref $ref->{'noBreakRegex'} eq 'HASH';
+            && ref $ref->{'noBreakRegex'} eq 'HASH';
     }
 
-    ref $this ? bless \%clone, ref $this
-              : bless $conf, $this;
+    ref $this
+        ? bless \%clone, ref $this
+        : bless $conf, $this;
 }
 
 # configure all the attributes of the object
@@ -658,14 +697,17 @@ sub config($@)
     croak "Bad method call"
         unless ref $this;
     my $conf;
-    if(ref $_[0] eq 'HASH') {
+    if ( ref $_[0] eq 'HASH' )
+    {
         $conf = shift;
     }
-    elsif(scalar(@_) % 2 == 0) {
+    elsif ( scalar(@_) % 2 == 0 )
+    {
         my %conf = @_;
         $conf = \%conf;
     }
-    else {
+    else
+    {
         croak "Bad hash ref";
     }
     my %clone = %{$this};
@@ -692,20 +734,20 @@ sub config($@)
         if defined $conf->{'extraSpace'};
     $this->{'_abbrs'} = $conf->{'abbrevs'}
         if defined $conf->{'abbrevs'}
-            && ref $conf->{'abbrevs'} eq 'HASH';
+        && ref $conf->{'abbrevs'} eq 'HASH';
     $this->{'_text'} = $conf->{'text'}
         if defined $conf->{'text'}
-            && ref $conf->{'text'} eq 'ARRAY';
+        && ref $conf->{'text'} eq 'ARRAY';
     $this->{'_hindent'} = abs int $conf->{'hangingIndent'}
         if defined $conf->{'hangingIndent'};
     $this->{'_hindtext'} = $conf->{'hangingText'}
         if defined $conf->{'hangingText'}
-            && ref $conf->{'hangingText'} eq 'ARRAY';
+        && ref $conf->{'hangingText'} eq 'ARRAY';
     $this->{'_nobreak'} = abs int $conf->{'noBreak'}
         if defined $conf->{'noBreak'};
     $this->{'_nobreakregex'} = $conf->{'noBreakRegex'}
         if defined $conf->{'noBreakRegex'}
-            && ref $conf->{'noBreakRegex'} eq 'HASH';
+        && ref $conf->{'noBreakRegex'} eq 'HASH';
 
     bless \%clone, ref $this;
 }
@@ -716,8 +758,9 @@ sub columns($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_cols'} = abs int shift
-       : $this->{'_cols'};
+    @_
+        ? $this->{'_cols'} = abs int shift
+        : $this->{'_cols'};
 }
 
 sub tabstop($;$)
@@ -726,8 +769,9 @@ sub tabstop($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_tabs'} = abs int shift
-       : $this->{'_tabs'};
+    @_
+        ? $this->{'_tabs'} = abs int shift
+        : $this->{'_tabs'};
 }
 
 sub firstIndent($;$)
@@ -736,8 +780,9 @@ sub firstIndent($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_findent'} = abs int shift
-       : $this->{'_findent'};
+    @_
+        ? $this->{'_findent'} = abs int shift
+        : $this->{'_findent'};
 }
 
 sub bodyIndent($;$)
@@ -746,8 +791,9 @@ sub bodyIndent($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_bindent'} = abs int shift
-       : $this->{'_bindent'};
+    @_
+        ? $this->{'_bindent'} = abs int shift
+        : $this->{'_bindent'};
 }
 
 sub rightFill($;$)
@@ -756,8 +802,9 @@ sub rightFill($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_fill'} = abs int shift
-       : $this->{'_fill'};
+    @_
+        ? $this->{'_fill'} = abs int shift
+        : $this->{'_fill'};
 }
 
 sub rightAlign($;$)
@@ -766,8 +813,9 @@ sub rightAlign($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_align'} = abs int shift
-       : $this->{'_align'};
+    @_
+        ? $this->{'_align'} = abs int shift
+        : $this->{'_align'};
 }
 
 sub justify($;$)
@@ -776,8 +824,9 @@ sub justify($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_justify'} = abs int shift
-       : $this->{'_justify'};
+    @_
+        ? $this->{'_justify'} = abs int shift
+        : $this->{'_justify'};
 }
 
 sub leftMargin($;$)
@@ -786,8 +835,9 @@ sub leftMargin($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_lmargin'} = abs int shift
-       : $this->{'_lmargin'};
+    @_
+        ? $this->{'_lmargin'} = abs int shift
+        : $this->{'_lmargin'};
 }
 
 sub rightMargin($;$)
@@ -796,8 +846,9 @@ sub rightMargin($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_rmargin'} = abs int shift
-       : $this->{'_rmargin'};
+    @_
+        ? $this->{'_rmargin'} = abs int shift
+        : $this->{'_rmargin'};
 }
 
 sub extraSpace($;$)
@@ -806,8 +857,9 @@ sub extraSpace($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_space'} = abs int shift
-       : $this->{'_space'};
+    @_
+        ? $this->{'_space'} = abs int shift
+        : $this->{'_space'};
 }
 
 # takes a reference to your hash or takes a list of abbreviations,
@@ -818,17 +870,20 @@ sub abbrevs($@)
     croak "Bad method call"
         unless ref $this;
 
-    if(ref $_[0] eq 'HASH') {
+    if ( ref $_[0] eq 'HASH' )
+    {
         $this->{'_abbrs'} = shift;
     }
-    elsif(@_ > 0) {
+    elsif ( @_ > 0 )
+    {
         my %tmp;
         @tmp{@_} = @_;
         $this->{'_abbrs'} = \%tmp;
     }
 
-    wantarray ? sort keys %abbrev
-              : join ' ',sort keys %abbrev;
+    wantarray
+        ? sort keys %abbrev
+        : join ' ', sort keys %abbrev;
 }
 
 sub text($;$)
@@ -841,8 +896,9 @@ sub text($;$)
     $this->{'_text'} = $text
         if ref $text eq 'ARRAY';
 
-    wantarray ? @{$this->{'_text'}}
-              : join ' ', @{$this->{'_text'}};
+    wantarray
+        ? @{ $this->{'_text'} }
+        : join ' ', @{ $this->{'_text'} };
 }
 
 sub hangingIndent($;$)
@@ -851,8 +907,9 @@ sub hangingIndent($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_hindent'} = abs int shift
-       : $this->{'_hindent'};
+    @_
+        ? $this->{'_hindent'} = abs int shift
+        : $this->{'_hindent'};
 }
 
 sub hangingText($;$)
@@ -865,8 +922,9 @@ sub hangingText($;$)
     $this->{'_hindtext'} = $text
         if ref $text eq 'ARRAY';
 
-    wantarray ?  @{$this->{'_hindtext'}}
-              : join ' ', @{$this->{'_hindtext'}};
+    wantarray
+        ? @{ $this->{'_hindtext'} }
+        : join ' ', @{ $this->{'_hindtext'} };
 }
 
 sub noBreak($;$)
@@ -875,8 +933,9 @@ sub noBreak($;$)
     croak "Bad method call"
         unless ref $this;
 
-    @_ ? $this->{'_nobreak'} = abs int shift
-       : $this->{'_nobreak'};
+    @_
+        ? $this->{'_nobreak'} = abs int shift
+        : $this->{'_nobreak'};
 }
 
 sub noBreakRegex($;$)
@@ -889,7 +948,7 @@ sub noBreakRegex($;$)
     $this->{'_nobreakregex'} = $nobreak
         if ref $nobreak eq 'HASH';
 
-    %{$this->{'_nobreakregex'}};
+    %{ $this->{'_nobreakregex'} };
 }
 
 # internal routine, should not be called by an external routine
@@ -898,34 +957,39 @@ sub __make_line($$$$$)
     my $this = shift;
     croak "Bad method call"
         unless ref $this;
-    my ($line,$lead_white,$width,$not_last) = @_;
-    my $fill = '';
+    my ( $line, $lead_white, $width, $not_last ) = @_;
+    my $fill    = '';
     my $lmargin = ' ' x $this->{'_lmargin'};
 
-    $fill = ' ' x ($width - length($line))
-        if $this->{'_fill'} && ! $this->{'_align'};
-    if($this->{'_justify'} && ! ($this->{'_fill'} || $this->{'_align'})
-            && defined $line && $line =~ /\S+\s+\S+/ && $not_last) {
+    $fill = ' ' x ( $width - length($line) )
+        if $this->{'_fill'} && !$this->{'_align'};
+    if (   $this->{'_justify'}
+        && !( $this->{'_fill'} || $this->{'_align'} )
+        && defined $line
+        && $line =~ /\S+\s+\S+/
+        && $not_last )
+    {
         my $spaces = $width - length($line);
-        my @words = split /(\s+)/,$line;
-        my $ws = int ($spaces / int (@words / 2)); # for filling all gaps
-        $spaces %= int (@words / 2)
-            if $ws > 0; # if we must fill between every single word
-        for (reverse @words) {
+        my @words  = split /(\s+)/, $line;
+        my $ws     = int( $spaces / int( @words / 2 ) );  # for filling all gaps
+        $spaces %= int( @words / 2 )
+            if $ws > 0;    # if we must fill between every single word
+        for ( reverse @words )
+        {
             next
                 if /^\S/;
-            substr($_,0,0) = ' ' x $ws;
+            substr( $_, 0, 0 ) = ' ' x $ws;
             $spaces || next;
-            substr($_,0,0) = ' ';
+            substr( $_, 0, 0 ) = ' ';
             --$spaces;
         }
-        $line = join '',@words;
+        $line = join '', @words;
     }
     $line = $lmargin . $lead_white . $line . $fill . "\n"
         if defined $line;
-    substr($line,0,0) = ' ' x ($this->{'_cols'}
-            - $this->{'_rmargin'} - (length($line) - 1))
-        if $this->{'_align'} && ! $this->{'_fill'} && defined $line;
+    substr( $line, 0, 0 ) =
+        ' ' x ( $this->{'_cols'} - $this->{'_rmargin'} - ( length($line) - 1 ) )
+        if $this->{'_align'} && !$this->{'_fill'} && defined $line;
 
     $line;
 }
@@ -939,12 +1003,13 @@ sub __is_abbrev($$)
     my $word = shift;
 
     $word =~ s/\.$//
-        if defined $word; # remove period if there is one
-    # if we have an abbreviation OR no extra space is wanted after
-    # sentence endings
+        if defined $word;    # remove period if there is one
+        # if we have an abbreviation OR no extra space is wanted after
+        # sentence endings
     return 1
-        if ! $this->{'_space'}
-            || exists($abbrev{$word}) || exists(${$this->{'_abbrs'}}{$word});
+        if !$this->{'_space'}
+        || exists( $abbrev{$word} )
+        || exists( ${ $this->{'_abbrs'} }{$word} );
 
     0;
 }
@@ -955,39 +1020,44 @@ sub __do_break($$$)
     my $this = shift;
     croak "Bad method call"
         unless ref $this;
-    my ($line,$next_line) = @_;
+    my ( $line, $next_line ) = @_;
     my $no_break = 0;
-    my @words = split /\s+/,$line
+    my @words = split /\s+/, $line
         if defined $line;
     my $last_word = $words[$#words];
 
-    for (keys %{$this->{'_nobreakregex'}}) {
+    for ( keys %{ $this->{'_nobreakregex'} } )
+    {
         $no_break = 1
             if $last_word =~ m$_
-                && $next_line =~ m${$this->{'_nobreakregex'}}{$_};
+            && $next_line =~ m${$this->{'_nobreakregex'}}{$_};
     }
 
-    if($no_break && @words > 1) {
+    if ( $no_break && @words > 1 )
+    {
         my $i;
-        for($i = $#words;$i > 0;--$i) {
+        for ( $i = $#words ; $i > 0 ; --$i )
+        {
             $no_break = 0;
-            for (keys %{$this->{'_nobreakregex'}}) {
+            for ( keys %{ $this->{'_nobreakregex'} } )
+            {
                 $no_break = 1
-                    if $words[$i - 1] =~ m$_
-                        && $words[$i] =~
-                            m${$this->{'_nobreakregex'}}{$_};
+                    if $words[ $i - 1 ] =~ m$_
+                    && $words[$i] =~ m${$this->{'_nobreakregex'}}{$_};
             }
             last
-                if ! $no_break;
+                if !$no_break;
         }
-        if($i > 0) { # found break point
+        if ( $i > 0 )
+        {    # found break point
             $line =~ s/((?:\S+\s+){$i})(.+)/$1/;
             $next_line = $2 . ' ' . $next_line;
             $line =~ s/\s+$//;
         }
+
         # else, no breakpoint found and must break here anyways :<
     }
-    ($line,$next_line);
+    ( $line, $next_line );
 }
 
 1;
