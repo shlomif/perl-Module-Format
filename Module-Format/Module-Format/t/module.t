@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 71;
+use Test::More tests => 72;
 
 use Module::Format::Module;
 
@@ -452,6 +452,13 @@ use Module::Format::Module;
         $module->format_as('metacpan_rel'),
         'https://metacpan.org/release/MooseX-Role-BuildInstanceOf',
         "format_as metacpan_rel",
+    );
+
+    # TEST
+    is(
+        $module->format_as('metacpan_pod'),
+        'https://metacpan.org/pod/MooseX::Role::BuildInstanceOf',
+        "format_as metacpan_pod",
     );
 }
 
