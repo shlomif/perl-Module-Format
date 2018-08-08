@@ -1,5 +1,8 @@
 Revision history for Module-Format
 
+0.2.0   Unknown
+        - Add support for formatting/input to/from MetaCPAN URLs.
+
 0.0.8   2018-05-02
         - Convert to dist zilla
         - Move repo to GitHub .

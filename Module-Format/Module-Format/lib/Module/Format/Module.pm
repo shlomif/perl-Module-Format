@@ -148,6 +148,10 @@ Like colon only wrapped inside C<perl(...)> - useful for rpm provides for
 individual modules. E.g: C<perl(XML::RSS)>,
 C<perl(Catalyst::Plugin::Authentication)> .
 
+=item * 'metacpan_rel'
+
+A MetaCPAN release page URL, e.g:
+C<https://metacpan.org/release/Text-Sprintf-Named> , C<https://metacpan.org/release/Class-XSAccessor> .
 =item * 'debian'
 
 Debian package format, such as C<libxml-rss-perl>,
@@ -157,8 +161,9 @@ C<libcatalyst-plugin-authentication-perl> . Output only.
 
 =cut
 
-my $dash_re  = qr{(?:\w+-)*\w+};
-my $colon_re = qr{(?:\w+::)*\w+};
+my $dash_re      = qr{(?:\w+-)*\w+};
+my $colon_re     = qr{(?:\w+::)*\w+};
+my $METACPAN_REL = 'https://metacpan.org/release/';
 
 my @formats_by_priority = (
     {
@@ -244,6 +249,27 @@ my @formats_by_priority = (
             my ($self) = @_;
 
             return join( '/', @{ $self->_components() } ) . '.pm';
+        },
+    },
+    {
+        name  => 'metacpan_rel',
+        regex => qr{\A\Q$METACPAN_REL\E$dash_re\z},
+        input => sub {
+            my ( $class, $value ) = @_;
+
+            if ( $value !~ s{\A\Q$METACPAN_REL\E}{} )
+            {
+                die
+"metacpan_rel value does not start with the '$METACPAN_REL' prefix.";
+            }
+
+            return $class->_calc_components_from_string(
+                { format => 'dash', value => $value } );
+        },
+        format => sub {
+            my ($self) = @_;
+
+            return 'perl-' . $self->format_as('dash');
         },
     },
     {

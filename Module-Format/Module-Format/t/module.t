@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 63;
+use Test::More tests => 67;
 
 use Module::Format::Module;
 
@@ -445,5 +445,33 @@ use Module::Format::Module;
         $module->format_as('dash'),
         'MooseX-Role-BuildInstanceOf',
         "format_as works for from_guess()ed module",
+    );
+}
+
+{
+    my $chosen_format;
+    my $module = Module::Format::Module->from_guess(
+        {
+            value      => 'https://metacpan.org/release/Text-Sprintf-Named',
+            format_ref => \$chosen_format,
+        }
+    );
+
+    # TEST
+    ok( $module, "from_guess initialises a module." );
+
+    # TEST
+    is_deeply(
+        $module->get_components_list(),
+        [qw(Text Sprintf Named)], "from_guess got good components.",
+    );
+
+    # TEST
+    is( $chosen_format, 'metacpan_rel', 'chosen format was initialised' );
+
+    # TEST
+    is(
+        $module->format_as('dash'),
+        'Text-Sprintf-Named', "format_as works for from_guess()ed module",
     );
 }
