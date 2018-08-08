@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 67;
+use Test::More tests => 68;
 
 use Module::Format::Module;
 
@@ -445,6 +445,13 @@ use Module::Format::Module;
         $module->format_as('dash'),
         'MooseX-Role-BuildInstanceOf',
         "format_as works for from_guess()ed module",
+    );
+
+    # TEST
+    is(
+        $module->format_as('metacpan_rel'),
+        'https://metacpan.org/release/MooseX-Role-BuildInstanceOf',
+        "format_as metacpan_rel",
     );
 }
 
