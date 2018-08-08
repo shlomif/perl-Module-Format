@@ -194,22 +194,23 @@ sub _gen_dash_format
     };
 }
 
-my @formats_by_priority = (
-    _gen_dash_format(
-        {
-            name   => 'rpm_dash',
-            prefix => 'perl-',
-        }
-    ),
-    {
-        name  => 'rpm_colon',
-        regex => qr{\Aperl\($colon_re\)\z},
+sub _gen_colon_format
+{
+    my ($args) = @_;
+
+    my $prefix = $args->{prefix};
+    my $suffix = $args->{suffix};
+    my $name   = $args->{name};
+
+    return +{
+        name  => $name,
+        regex => qr{\A\Q$prefix\E$colon_re\Q$suffix\E\z},
         input => sub {
             my ( $class, $value ) = @_;
 
-            if ( $value !~ m{\Aperl\(((?:\w+::)*\w+)\)\z} )
+            if ( $value !~ m{\A\Q$prefix\E((?:\w+::)*\w+)\Q$suffix\E\z} )
             {
-                die "Improper value for rpm_colon";
+                die "Improper value for $name";
             }
 
             return $class->_calc_components_from_string(
@@ -218,9 +219,25 @@ my @formats_by_priority = (
         format => sub {
             my ($self) = @_;
 
-            return 'perl(' . $self->format_as('colon') . ')';
+            return $prefix . $self->format_as('colon') . $suffix;
         },
-    },
+    };
+}
+
+my @formats_by_priority = (
+    _gen_dash_format(
+        {
+            name   => 'rpm_dash',
+            prefix => 'perl-',
+        }
+    ),
+    _gen_colon_format(
+        {
+            name   => 'rpm_colon',
+            prefix => 'perl(',
+            suffix => ')',
+        }
+    ),
     {
         name  => 'colon',
         regex => qr{\A$colon_re\z},
