@@ -165,16 +165,22 @@ my $dash_re      = qr{(?:\w+-)*\w+};
 my $colon_re     = qr{(?:\w+::)*\w+};
 my $METACPAN_REL = 'https://metacpan.org/release/';
 
-my @formats_by_priority = (
-    {
-        name  => 'rpm_dash',
-        regex => qr{\Aperl-$dash_re\z},
+sub _gen_dash_format
+{
+    my ($args) = @_;
+
+    my $prefix = $args->{prefix};
+    my $name   = $args->{name};
+
+    return +{
+        name  => $name,
+        regex => qr{\A\Q$prefix\E$dash_re\z},
         input => sub {
             my ( $class, $value ) = @_;
 
-            if ( $value !~ s{\Aperl-}{} )
+            if ( $value !~ s{\A\Q$prefix\E}{} )
             {
-                die "rpm_dash value does not start with the 'perl-' prefix.";
+                die "$name value does not start with the '$prefix' prefix.";
             }
 
             return $class->_calc_components_from_string(
@@ -183,9 +189,18 @@ my @formats_by_priority = (
         format => sub {
             my ($self) = @_;
 
-            return 'perl-' . $self->format_as('dash');
+            return $prefix . $self->format_as('dash');
         },
-    },
+    };
+}
+
+my @formats_by_priority = (
+    _gen_dash_format(
+        {
+            name   => 'rpm_dash',
+            prefix => 'perl-',
+        }
+    ),
     {
         name  => 'rpm_colon',
         regex => qr{\Aperl\($colon_re\)\z},
@@ -251,27 +266,12 @@ my @formats_by_priority = (
             return join( '/', @{ $self->_components() } ) . '.pm';
         },
     },
-    {
-        name  => 'metacpan_rel',
-        regex => qr{\A\Q$METACPAN_REL\E$dash_re\z},
-        input => sub {
-            my ( $class, $value ) = @_;
-
-            if ( $value !~ s{\A\Q$METACPAN_REL\E}{} )
-            {
-                die
-"metacpan_rel value does not start with the '$METACPAN_REL' prefix.";
-            }
-
-            return $class->_calc_components_from_string(
-                { format => 'dash', value => $value } );
-        },
-        format => sub {
-            my ($self) = @_;
-
-            return $METACPAN_REL . $self->format_as('dash');
-        },
-    },
+    _gen_dash_format(
+        {
+            name   => 'metacpan_rel',
+            prefix => $METACPAN_REL,
+        }
+    ),
     {
         name   => 'debian',
         format => sub {
