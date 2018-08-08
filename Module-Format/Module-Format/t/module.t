@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 68;
+use Test::More tests => 71;
 
 use Module::Format::Module;
 
@@ -481,4 +481,26 @@ use Module::Format::Module;
         $module->format_as('dash'),
         'Text-Sprintf-Named', "format_as works for from_guess()ed module",
     );
+}
+
+{
+    my $chosen_format;
+    my $module = Module::Format::Module->from_guess(
+        {
+            value      => 'https://metacpan.org/pod/Module::Format',
+            format_ref => \$chosen_format,
+        }
+    );
+
+    # TEST
+    ok( $module, "from_guess initialises a module." );
+
+    # TEST
+    is_deeply(
+        $module->get_components_list(),
+        [qw(Module Format)], "from_guess got good components.",
+    );
+
+    # TEST
+    is( $chosen_format, 'metacpan_pod', 'chosen format was initialised' );
 }

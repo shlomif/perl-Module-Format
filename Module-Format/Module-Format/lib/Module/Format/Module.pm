@@ -152,6 +152,12 @@ C<perl(Catalyst::Plugin::Authentication)> .
 
 A MetaCPAN release page URL, e.g:
 C<https://metacpan.org/release/Text-Sprintf-Named> , C<https://metacpan.org/release/Class-XSAccessor> .
+
+=item * 'metacpan_pod'
+
+A MetaCPAN POD page URL, e.g:
+C<https://metacpan.org/pod/Module::Format> , C<https://metacpan.org/pod/Data::ParseBinary> .
+
 =item * 'debian'
 
 Debian package format, such as C<libxml-rss-perl>,
@@ -287,6 +293,13 @@ my @formats_by_priority = (
         {
             name   => 'metacpan_rel',
             prefix => $METACPAN_REL,
+        }
+    ),
+    _gen_colon_format(
+        {
+            name   => 'metacpan_pod',
+            prefix => 'https://metacpan.org/pod/',
+            suffix => '',
         }
     ),
     {
