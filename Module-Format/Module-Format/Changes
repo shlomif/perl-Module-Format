@@ -1,6 +1,10 @@
 Revision history for Module-Format
 
-0.2.0   Unknown
+0.4.0   2020-04-06
+        - Add support for 'freebsd_dash' - "p5-*".
+        - CI/CD and GitHub enhancements.
+
+0.2.0   2018-08-08
         - Add support for formatting/input to/from MetaCPAN URLs.
 
 0.0.8   2018-05-02
