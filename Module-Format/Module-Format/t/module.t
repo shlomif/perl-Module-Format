@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 72;
+use Test::More tests => 73;
 
 use Module::Format::Module;
 
@@ -225,6 +225,11 @@ use Module::Format::Module;
         'perl(XML::Grammar::Fiction)', "Format as rpm_colon is sane.",
     );
 
+    # TEST
+    is(
+        $clone->format_as('freebsd_dash'),
+        'p5-XML-Grammar-Fiction', "Format as freebsd_dash is sane.",
+    );
 }
 
 {

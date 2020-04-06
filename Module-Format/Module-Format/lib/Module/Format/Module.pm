@@ -163,6 +163,10 @@ C<https://metacpan.org/pod/Module::Format> , C<https://metacpan.org/pod/Data::Pa
 Debian package format, such as C<libxml-rss-perl>,
 C<libcatalyst-plugin-authentication-perl> . Output only.
 
+=item * 'freebsd_dash'
+
+Like dash, only with C<'p5-'> prefixed: C<p5-XML-RSS>, C<p5-Data-Dumper>.
+
 =back
 
 =cut
@@ -310,6 +314,12 @@ my @formats_by_priority = (
             return 'lib' . lc( $self->format_as('dash') ) . '-perl';
         },
     },
+    _gen_dash_format(
+        {
+            name   => 'freebsd_dash',
+            prefix => 'p5-',
+        }
+    ),
 );
 
 my %formats = ( map { $_->{name} => $_ } @formats_by_priority );
