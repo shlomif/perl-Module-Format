@@ -53,7 +53,7 @@ must be an array of L<Module::Format::Module> modules.
 sub new
 {
     my $class = shift;
-    my $self = bless {}, $class;
+    my $self  = bless {}, $class;
     $self->_init(@_);
     return $self;
 }

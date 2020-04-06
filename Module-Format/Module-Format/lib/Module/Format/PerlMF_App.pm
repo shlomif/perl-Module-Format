@@ -32,7 +32,7 @@ The constructor - call it with the command-line options.
 sub new
 {
     my $class = shift;
-    my $self = bless {}, $class;
+    my $self  = bless {}, $class;
     $self->_init(@_);
     return $self;
 }

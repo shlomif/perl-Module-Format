@@ -66,7 +66,7 @@ Module::Format::Module - encapsulates a single Perl module.
 sub _new
 {
     my $class = shift;
-    my $self = bless {}, $class;
+    my $self  = bless {}, $class;
     $self->_init(@_);
     return $self;
 }
@@ -449,7 +449,7 @@ sub from_guess
 
     my $dummy_format_string;
 
-    my $string = $args->{value};
+    my $string         = $args->{value};
     my $out_format_ref = ( $args->{format_ref} || ( \$dummy_format_string ) );
 
     # TODO : After the previous line the indentation in vim is reset to the
