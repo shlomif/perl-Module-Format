@@ -459,7 +459,7 @@ sub format($@)
             && length( $this->{'_hindcurr'} ) < 1
             && $caller ne 'Text::Format::paragraphs';
         my ($fchar) = $wrap[0] =~ /(\S)/;
-        my $white = index $wrap[0], $fchar;
+        my $white   = index $wrap[0], $fchar;
         if ( $white - $this->{'_lmargin'} - 1 > length( $this->{'_hindcurr'} ) )
         {
             $white = length( $this->{'_hindcurr'} ) + $this->{'_lmargin'};
@@ -1022,7 +1022,7 @@ sub __do_break($$$)
         unless ref $this;
     my ( $line, $next_line ) = @_;
     my $no_break = 0;
-    my @words = split /\s+/, $line
+    my @words    = split /\s+/, $line
         if defined $line;
     my $last_word = $words[$#words];
 
