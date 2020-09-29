@@ -121,8 +121,8 @@ sub run
         !(
             my $ret = GetOptionsFromArray(
                 $argv,
-                '0!' => sub { $delim = "\0"; $suffix = q{}; },
-                'n!' => sub { $delim = "\n"; $suffix = "\n"; },
+                '0!'     => sub { $delim = "\0"; $suffix = q{}; },
+                'n!'     => sub { $delim = "\n"; $suffix = "\n"; },
                 'help|h' => \$help,
                 man      => \$man,
             )

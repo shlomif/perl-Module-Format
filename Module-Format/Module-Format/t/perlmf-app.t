@@ -7,8 +7,10 @@ use Module::Format::PerlMF_App;
 
 use vars qw($trap);
 
+## no critic
 eval
 q{use Test::Trap qw( trap $trap :flow:stderr(systemsafe):stdout(systemsafe):warn );};
+## use critic
 
 if ($@)
 {
