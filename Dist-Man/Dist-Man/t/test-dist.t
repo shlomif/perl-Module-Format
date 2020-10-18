@@ -3,8 +3,8 @@
 use strict;
 use warnings;
 
-# Should be 469
-use Test::More tests => 469;
+# Should be 449
+use Test::More tests => 449;
 
 use Dist::Man;
 use File::Spec;
