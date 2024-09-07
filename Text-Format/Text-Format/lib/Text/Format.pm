@@ -510,13 +510,13 @@ sub paragraphs($@)
     }
 
     $cnt = 0;
-    for (@wrap)
+    for my $nextword (@wrap)
     {
         $this->{'_hindcurr'} = $this->{'_hindtext'}->[$cnt]
             if $this->{'_hindent'};
         $this->{'_hindcurr'} = ''
             unless defined $this->{'_hindcurr'};
-        $line = $this->format($_);
+        $line = $this->format($nextword);
         push @ret, $line . $end
             if defined $line && length $line > 0;
         ++$cnt;
@@ -545,21 +545,22 @@ sub center($@)
     my ($tabs);
     my $width = $this->{'_cols'} - $this->{'_lmargin'} - $this->{'_rmargin'};
 
-    for (@center)
+    for my $nextword (@center)
     {
-        s/(?:^\s+|\s+$)|\n//g;
-        $tabs = tr/\t//;    # count tabs
-        substr( $_, 0, 0 ) =
+        $nextword =~ s/(?:^\s+|\s+$)|\n//g;
+        $tabs = ( $nextword =~ tr/\t// );    # count tabs
+        substr( $nextword, 0, 0 ) =
             ' ' x
             int(
-            ( $width - length($_) - $tabs * $this->{'_tabs'} + $tabs ) / 2 )
-            if length > 0;
-        substr( $_, 0, 0 ) = ' ' x $this->{'_lmargin'}
-            if length > 0;
-        substr( $_, length ) = "\n";
+            ( $width - length($nextword) - $tabs * $this->{'_tabs'} + $tabs ) /
+                2 )
+            if length($nextword) > 0;
+        substr( $nextword, 0, 0 ) = ' ' x $this->{'_lmargin'}
+            if length($nextword) > 0;
+        substr( $nextword, length($nextword) ) = "\n";
     }
 
-    wantarray
+    return wantarray
         ? @center
         : join '', @center;
 }
@@ -977,13 +978,14 @@ sub __make_line($$$$$)
         my $ws     = int( $spaces / int( @words / 2 ) );  # for filling all gaps
         $spaces %= int( @words / 2 )
             if $ws > 0;    # if we must fill between every single word
-        for ( reverse @words )
+    WORDS_LOOP:
+        for my $nextword ( reverse @words )
         {
-            next
-                if /^\S/;
-            substr( $_, 0, 0 ) = ' ' x $ws;
-            $spaces || next;
-            substr( $_, 0, 0 ) = ' ';
+            next WORDS_LOOP
+                if $nextword =~ /^\S/;
+            substr( $nextword, 0, 0 ) = ' ' x $ws;
+            $spaces || next WORDS_LOOP;
+            substr( $nextword, 0, 0 ) = ' ';
             --$spaces;
         }
         $line = join '', @words;
@@ -1028,6 +1030,7 @@ sub __do_break($$$)
     my @words    = split /\s+/, $line
         if defined $line;
     my $last_word = $words[$#words];
+    local $_;
 
     for ( keys %{ $this->{'_nobreakregex'} } )
     {
