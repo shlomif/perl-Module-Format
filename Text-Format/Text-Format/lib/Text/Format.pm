@@ -393,28 +393,31 @@ sub format($@)
     $line   = shift @words;
     $abbrev = $this->__is_abbrev($line)
         if defined $line;
-    while ( defined( $_ = shift @words ) )
+    my $nextword;
+
+    while ( defined( $nextword = shift @words ) )
     {
 
-        if ( length($_) + length($line) < $width - 1
+        if ( length($nextword) + length($line) < $width - 1
             || ( $line !~ /[.?!]['"]?$/ || $abbrev )
-            && length($_) + length($line) < $width )
+            && length($nextword) + length($line) < $width )
         {
             $line .= ' '
                 if $line =~ /[.?!]['"]?$/ && !$abbrev;
-            $line .= ' ' . $_;
+            $line .= ' ' . $nextword;
         }
         else
         {
             last;
         }
-        $abbrev = $this->__is_abbrev($_);
+        $abbrev = $this->__is_abbrev($nextword);
     }
-    ( $line, $_ ) = $this->__do_break( $line, $_ )
+    ( $line, $nextword ) = $this->__do_break( $line, $nextword )
         if $this->{'_nobreak'} && defined $line;
-    push @wrap, $this->__make_line( $line, $findent, $width, defined $_ )
+    push @wrap,
+        $this->__make_line( $line, $findent, $width, defined($nextword) )
         if defined $line;
-    $line = $_;
+    $line = $nextword;
     $width =
         $this->{'_cols'} -
         $this->{'_bindent'} -
@@ -423,28 +426,28 @@ sub format($@)
     $abbrev = 0;
     $abbrev = $this->__is_abbrev($line)
         if defined $line;
-    while ( defined( $_ = shift @words ) )
+    while ( defined( $nextword = shift @words ) )
     {
 
-        if ( length($_) + length($line) < $width - 1
+        if ( length($nextword) + length($line) < $width - 1
             || ( $line !~ /[.?!]['"]?$/ || $abbrev )
-            && length($_) + length($line) < $width )
+            && length($nextword) + length($line) < $width )
         {
             $line .= ' '
                 if $line =~ /[.?!]['"]?$/ && !$abbrev;
-            $line .= ' ' . $_;
+            $line .= ' ' . $nextword;
         }
         else
         {
-            ( $line, $_ ) = $this->__do_break( $line, $_ )
+            ( $line, $nextword ) = $this->__do_break( $line, $nextword )
                 if $this->{'_nobreak'};
             push @wrap,
-                $this->__make_line( $line, $bindent, $width, defined $_ )
+                $this->__make_line( $line, $bindent, $width, defined $nextword )
                 if defined $line;
-            $line = $_;
+            $line = $nextword;
         }
-        $abbrev = $this->__is_abbrev($_)
-            if defined $_;
+        $abbrev = $this->__is_abbrev($nextword)
+            if defined $nextword;
     }
     push @wrap, $this->__make_line( $line, $bindent, $width, 0 )
         if defined $line;
